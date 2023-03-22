@@ -1,0 +1,54 @@
+<!-- blog/blog_app/templates/blog_app/comments.html -->
+{% if post %}
+<div class="content" id="comments-area">
+    <h2>Comments</h2>
+    {% if request.user.is_authenticated %}
+    <div class="btn-add-comment">
+        <h2>Ajouter un commentaire</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button 
+                hx-post="{% url 'comments_area' pk=post.pk %}"
+                hx-target="#comments-area"
+                hx-swap="#comments-area">
+                Poster
+            </button>
+        </form>
+    </div>
+    {% endif %}
+    <div class="comments">
+        {% if comments %}
+        {% for comment in comments %}
+            <hr>
+            <div class="comment">
+                <h3>{{ comment.username }} - {{ comment.date }}</h3>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+        {% else %}
+        rien
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+
+{% block script %}
+    <script>
+
+        document.getElementById("id_content").value = ""
+
+        var contents = document.querySelector(".contents");
+        var content = document.querySelector(".content");
+        var mainContent = document.querySelector(".main-content");
+        console.log("mainContent: ",mainContent.clientHeight)
+        console.log("content: ",content.clientHeight)
+        
+        var height = mainContent.clientHeight;
+        console.log("height: ",height)
+        console.log("contents: ",contents.clientHeight)
+        contents.style.height = height + "px";
+
+    </script>
+{% endblock script %}

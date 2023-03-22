@@ -1,0 +1,106 @@
+<!-- blog/blog_app/tempaltes/blog_app/post.html -->
+
+{% load static %}
+
+<head>
+    
+    <link rel="stylesheet" type="text/css" href={% static "blog_app/post.css" %}>
+
+    {% load static %}
+    {% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href={% static 'blog_app/write_post.css' %}>
+    {% endblock stylesheet %}
+</head>
+<body>
+    {% block index %}
+
+    <div id="write-page">
+    <div class="post-page">
+        page de post
+        <a href="#" onclick="location.href='{% url "index" %}'">
+            Retour
+        </a>
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <input type="submit" value="Créer le post">
+        </form>
+    </div>
+    
+
+    {% for post in posts %}
+    post:
+    <div class="post">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.date }}</p>
+        <p>{{ post.username }}</p>
+        <p>{{ post.categorie }}</p>
+    </div>
+    {% endfor %}
+</body>
+
+
+<script>
+    function adjustHeight(el) {
+      el.style.height = "auto";
+      el.style.height = (el.scrollHeight)+"px";
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      var textareas = document.querySelectorAll("textarea");
+      textareas.forEach(function(textarea) {
+        adjustHeight(textarea);
+        textarea.addEventListener("input", function() {
+          adjustHeight(this);
+        });
+      });
+    });
+</script>
+    
+
+<!-- blog_app/templates/blog_app/post.html -->
+<!-- 
+{% load static %}
+
+<head> 
+    <link rel="stylesheet" type="text/css" href={% static "blog_app/post.css" %}>
+</head>
+
+<body>
+
+    <div id="write-page">
+        <h1>Créer un nouveau post</h1>
+        <a href="#" onclick="location.href='{% url "index" %}'">
+            Retour
+        </a>
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+
+            <label for="id_write_title">Titre</label>
+            {{ form.title }}
+
+            <label for="id_write_content">Contenu de l'article</label>
+            {{ form.content }}
+
+            <label for="id_write_image">Image</label>
+            {{ form.image }}
+
+            <label for="id_write_categorie">Catégorie</label>
+            {{ form.categorie }}
+
+            <input type="submit" value="Créer le post">
+        </form>
+    </div>
+
+    {% for post in posts %}
+    <div class="post">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.date }}</p>
+        <p>{{ post.username }}</p>
+        <p>{{ post.categorie }}</p>
+    </div>
+    {% endfor %}
+
+    {% endblock index %}  
+</body> -->

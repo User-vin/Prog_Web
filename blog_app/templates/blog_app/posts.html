@@ -1,0 +1,116 @@
+<!-- blog_app/tempaltes/blog_app/posts.html -->
+
+{% extends 'base.html' %}
+
+<head>
+
+    {% block stylesheet %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href={% static "blog_app/posts.css" %}>
+    {% endblock stylesheet %}
+
+</head>
+
+<body>
+
+    {% block index %}
+
+    {% if request.resolver_match.url_name == 'list_posts' %}
+        <h1>Tous les articles</h1>
+    {% elif request.resolver_match.url_name == 'posts_filter' %}
+        {% if filter_by == 'username' %}
+            <h1>Articles de {{ username }}</h1>
+        {% elif filter_by == 'date' %}
+            <h1>Articles du {{ date }}</h1>
+        {% elif filter_by == 'categorie' %}
+            <h1>Articles de la catégorie {{ categorie }}</h1>
+        {% elif filter_by == 'bookmark' %}
+            <h1>Articles bookmarked</h1>
+            {% if message %}
+                {{ message }}
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <h1>Blog</h1>
+    {% endif %}
+
+    <!-- posts -->
+    <section class="display-posts">
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post" >
+                    
+                    <div class="post-img" 
+                        style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
+                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                    </div>
+                    <div class="post-description"
+                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                        <a href="{% url 'posts_filter' filter_by='categorie' value=post.categorie %}" class="post-categorie colored-text">
+                            {{ post.categorie }}
+                        </a>
+                        <h2 class="bold-title">
+                            {{ post.title }} 
+                        </h2>
+                        <hr>
+                        <a href="{% url 'posts_filter' filter_by='date' value=post.date %}" class="date transition-btn">
+                            {{ post.date }}
+                        </a>
+                        <span>/</span>
+                        <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
+                            {{ post.username }}
+                        </a>
+                        
+                        <p class="description-text">
+                            {{ post.content|linebreaksbr|truncatechars:100 }}
+                        </p>
+                    </div>
+                    <div class="last-row">
+                        <div class="zone-icons icons boutons">
+                            {% include "blog_app/favori_btn.html" %}
+                            {% include "blog_app/bookmark_btn.html" %}
+                        </div>
+                        <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'"></div>
+                    </div>
+                </div>  
+            {% endfor %}
+        </div>
+        
+    </section>
+    
+    <!-- Inf -->
+
+    {{ posts }}
+    <br>
+    Has Previous: {{ posts.has_previous }}
+    <br>
+    Has Next: {{ posts.has_next }}
+    <br>
+    Current Page: {{ posts.number }}
+    <br>
+    Number of Pages: {{ posts.paginator.num_pages }}
+    <hr>
+
+
+
+    <!-- bouttons de navigations -->
+
+    {% if posts.has_previous %}
+
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ posts.previous_page_number }}">Previous</a>
+
+    {% endif %}
+
+    Page {{ posts.number }} of {{ posts.paginator.num_pages}}
+
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">Next</a>
+        <a href="?page={{ posts.paginator.num_pages }}">Last &raquo</a>
+    {% endif %}
+
+    {% endblock index %}
+
+</body>
+
+

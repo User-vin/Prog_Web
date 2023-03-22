@@ -1,0 +1,25 @@
+<!-- blog/blog_app/templates/blog_app/contact.html -->
+
+<html>
+
+<head>
+    
+</head>
+
+
+<body>
+
+    <h1>Contact Page</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="send" id="send-btn">
+    </form>
+    
+
+</body>
+
+</html>
+
+
+

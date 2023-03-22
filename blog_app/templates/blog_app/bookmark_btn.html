@@ -1,0 +1,22 @@
+<!-- blog/blog_app/templates/blog_app/bookmark_btn.html -->
+
+
+<div id="bookmark-btns{{ post.id }}">
+  <p>
+
+    <button
+      hx-post="{% url 'add_remove_bookmark' post.id %}" 
+      hx-target="#bookmark-btns{{ post.id }}" 
+      hx-swap="#bookmark-btns{{ post.id }}">
+
+      {% if user in post.bookmark.all %}
+        <i class="fa-solid fa-bookmark material-icons"></i>
+      {% else %}
+        <i class="fa-regular fa-bookmark material-icons"></i>
+      {% endif %}
+
+    </button>
+    {{ post.bookmark.count }}
+  </p> 
+    
+</div>

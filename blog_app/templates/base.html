@@ -1,0 +1,103 @@
+<!-- blog/blog_app/templates/base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/47fdd051ae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href={% static 'blog_app/base.css' %}>
+    {% block stylesheet %}
+
+    {% endblock stylesheet %}
+    <title>Blog</title>
+</head>
+<body id="page">
+    
+    <section class="top-page">
+        <header class="header">
+            <img src="{% static 'images/logos/burgerlogo.png' %}" alt="logo">
+            <!--<h1 class="header-title"> </h1> -->
+        </header>
+        <div class="landing-page">
+            <h2 class="landing-page-title">
+                TITLE
+            </h2>
+            <div class="social-media">
+                <i class="fa-brands fa-twitter transition-btn"></i>
+                <i class="fa-brands fa-instagram transition-btn"></i>
+                <i class="fa-brands fa-tiktok transition-btn"></i>
+                <i class="fa-brands fa-discord transition-btn"></i>
+            </div>
+        </div>
+    </section>
+
+    <nav class="nav">
+        <div class="menu" onclick="openSide()">
+        <div id="sidebar"></div>
+            <button><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="links">
+            <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
+            <li class="transition-btn">About us</li>
+            <li class="transition-btn" onclick="location.href='{% url "posts_filter" filter_by='bookmark' value=request.user %}'">Bookmarks</li>
+            <li class="transition-btn" onclick="location.href='{% url "list_posts" %}'">Posts</li>
+            <li class="transition-btn" onclick="location.href='{% url "post" %}'">Write</li>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="button-log-regis">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
+            </form>       
+        {% else %}
+            <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
+                Login/Register
+            </button>
+            </div>
+        {% endif %}
+    </nav>
+
+    {% block index %}
+    missing block index
+    {% endblock index %}
+
+
+    <footer>
+        <p class="copyright">&copy; 2023 - MANGER MANGER</p>
+        <a href="#" class="cgv transition-btn" style="text-decoration: none;">Conditions générales de ventes</a>
+    </footer>
+
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (e) => {
+            e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+            })
+    </script>
+
+    <script>
+        const logoutButton = document.getElementById('logout-btn');
+      
+        logoutButton.addEventListener('click', () => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/logout/');
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+          xhr.onload = () => {
+            if (xhr.status === 200) {
+              location.reload();
+            }
+          };
+          xhr.send();
+        });
+
+        
+
+    </script>
+    <script src="{% static '/blog_app/app.js' %}"></script>
+    {% block script %}
+
+    {% endblock script %}
+</body>
+

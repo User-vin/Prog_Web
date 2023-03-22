@@ -1,0 +1,131 @@
+/* /* blog_app/static/blog_app/post.css */
+
+
+
+
+/* #write-page{
+    margin: auto;
+    width: 40%;
+    border: 1px solid black;
+} */
+
+#id_write_title{
+    width: 100%;
+}
+
+#id_write_content{
+    width: 100%;
+    max-width: 100%;
+}
+
+
+#write-page{
+    margin: auto;
+    width: 42%;
+    padding: 1%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #ddd;
+  }
+  
+  #write-page h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  #write-page form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  
+  #write-page input[type="text"],
+  #write-page textarea {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    font-size: 16px;
+    background-color: yellowgreen;
+  }
+  
+  #write-page input[type="text"] {
+    height: 40px;
+  }
+  
+  #write-page textarea {
+    height: auto;
+    resize: none;
+    min-height: 100px;
+  }
+  
+  #write-page input[type="submit"] {
+    background-color: #8A2BE2;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  #write-page input[type="submit"]:hover {
+    background-color: #6B238E;
+  }
+  
+
+/* blog_app/static/blog_app/post.css */
+/* 
+#write-page{
+    margin: auto;
+    width: 80%;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input[type="text"], textarea {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #9900cc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #b366ff;
+}
+ */
+

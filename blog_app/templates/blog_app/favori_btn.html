@@ -1,0 +1,21 @@
+<!-- blog/blog_app/templates/blog_app/favori_btn.html -->
+
+
+<div id="favori-btns{{ post.id }}">
+  <p>
+    <button
+      hx-post="{% url 'add_remove_favori' post.id %}" 
+      hx-target="#favori-btns{{ post.id }}" 
+      hx-swap="#favori-btns{{ post.id }}">
+
+      {% if user in post.favoris.all %}
+        <i class="fa-solid fa-heart material-icons"></i>
+      {% else %}
+        <i class="fa-regular fa-heart material-icons"></i>
+      {% endif %}
+
+    </button>
+    {{ post.favoris.count }}
+  </p> 
+    
+</div>

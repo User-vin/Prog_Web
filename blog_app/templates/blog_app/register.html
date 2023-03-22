@@ -1,0 +1,39 @@
+<!-- blog_app/templates/blog_app/register.html -->
+{% extends 'base.html' %}
+
+<head>
+    {% load static %}
+    {% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href={% static 'blog_app/login-register.css' %}>
+    {% endblock stylesheet %}
+</head>
+<body>
+    {% block index %}
+    <div class="login-page">
+        <div class="interface">
+            <h2>Sign Up</h2>
+            <!-- si action="" alros les données entré au clavier votn être envoyées dans la vue
+            method="post" permet d'envoyer les données comme requête http post
+            novalidate indique au navigateur de ne pas validé les entrés dans le formulaire
+            novalidate à enlever par la suite  -->
+            <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Sign Up">
+            </form>
+            <div id="authentificate">
+                <p>Already have an account?</p>
+                <a onclick="location.href='{% url "login" %}'">
+                    Login
+                </a>
+            </div>
+            <a href="#" onclick="location.href='{% url "index" %}'">
+                Cancel
+            </a>    
+        </div>
+    </div>
+    {% endblock index %}
+</body>
+
+
+
