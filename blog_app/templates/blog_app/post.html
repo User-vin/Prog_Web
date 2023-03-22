@@ -38,9 +38,16 @@
         <p>{{ post.categorie }}</p>
     </div>
     {% endfor %}
+
+    
+
 </body>
 
+{% load static %}
 
+<link href="{% static 'ckeditor/ckeditor.css' %}" rel="stylesheet">
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'ckeditor-init.js' %}"></script>
 <script>
     function adjustHeight(el) {
       el.style.height = "auto";

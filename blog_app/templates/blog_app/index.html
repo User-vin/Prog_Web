@@ -63,7 +63,7 @@
                     </a>
                 </div>
                 <p class="description-text">
-                    {{ first_post.content|linebreaksbr|truncatechars:200 }}
+                    {{ first_post.content|safe|truncatechars:200 }}
                 </p>
                 <div class="icons boutons">
                     {% include "blog_app/favori_btn.html" with post=first_post %}
@@ -92,7 +92,7 @@
                     </a>
                 </div>
                 <p class="description-text">
-                    {{ second_post.content|linebreaksbr|truncatechars:200 }}
+                    {{ second_post.content|safe|truncatechars:200 }}
                 </p>
                 <div class="icons boutons">
                     {% include "blog_app/favori_btn.html" with post=second_post %}
@@ -129,7 +129,7 @@
                             {{ post.username }}
                         </a>
                         <p class="description-text">
-                            {{ post.content|linebreaksbr|truncatechars:100 }}
+                            {{ post.content|safe|truncatechars:100 }}
                         </p>
                         
                     </div>

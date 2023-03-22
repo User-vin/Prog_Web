@@ -6,6 +6,7 @@
 
 from django import forms
 from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from . import models
 
 class LoginForm(forms.Form):
@@ -31,7 +32,8 @@ class CreatePostForm(forms.ModelForm):
         widgets = {  
             'title': forms.TextInput(attrs={'placeholder': 'Titre', 'id': 'id_write_title'}), # affiche du texte dans le champ
             # 'content': forms.Textarea(attrs={'placeholder': 'Contenu de l\'article', 'id': 'id_write_content'}),
-            'content': CKEditorWidget(),
+            # 'content': CKEditorWidget(),
+            'content': forms.CharField(widget=CKEditorUploadingWidget()),
         }
         label_suffix = ''
     

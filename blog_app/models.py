@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # gestionnaire par défaut plus disponible car User remplacé par une version personnalisée (UserModels)
 class UserManager(BaseUserManager):
@@ -64,7 +65,8 @@ class PostModels(models.Model): # structure d'un article de blog
     date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=30, blank=False)
     # content = models.TextField(blank=False)
-    content = RichTextField(blank=False, null=True)
+    # content = RichTextField(blank=False, null=True)
+    content = RichTextUploadingField(blank=False, null=True)
     image = models.ImageField(upload_to='posts_images/', blank=False, null=True)
     favoris = models.ManyToManyField(UserModels, blank=True, related_name='favoris')
     bookmark = models.ManyToManyField(UserModels, blank=True, related_name='bookmark')

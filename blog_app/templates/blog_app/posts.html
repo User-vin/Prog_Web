@@ -62,7 +62,7 @@
                         </a>
                         
                         <p class="description-text">
-                            {{ post.content|linebreaksbr|truncatechars:100 }}
+                            {{ post.content|safe|truncatechars:100 }}
                         </p>
                     </div>
                     <div class="last-row">
