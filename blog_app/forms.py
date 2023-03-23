@@ -25,9 +25,9 @@ class CreatePostForm(forms.ModelForm):
         fields = ['title', 'image', 'content', 'categorie']
         labels = { # libellés remplacés par ''
             'title': '',
-            'categorie': '',
-            'content': '',
-            'image': '',
+            'categorie': 'Catégorie',
+            'content': 'Contenu',
+            'image': 'Image',
         }
         widgets = {  
             'title': forms.TextInput(attrs={'placeholder': 'Titre', 'id': 'id_write_title'}), # affiche du texte dans le champ

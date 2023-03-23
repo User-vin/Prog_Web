@@ -1,131 +1,77 @@
-/* /* blog_app/static/blog_app/post.css */
+/* blog_app/static/blog_app/post.css */
 
-
-
-
-/* #write-page{
-    margin: auto;
-    width: 40%;
-    border: 1px solid black;
-} */
+#write-page{
+  margin-top: 10%;
+  margin-bottom: 20px;
+}
 
 #id_write_title{
-    width: 100%;
+  width: fit-content;
 }
 
 #id_write_content{
-    width: 100%;
-    max-width: 100%;
+  width: fit-content;
 }
 
+#id_categorie{
+  width: fit-content;
+}
 
 #write-page{
-    margin: auto;
-    width: 42%;
-    padding: 1%;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #ddd;
-  }
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 42%;
+  padding: 1%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #ddd;
+}
   
-  #write-page h1 {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  #write-page form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-  }
-  
-  #write-page input[type="text"],
-  #write-page textarea {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #f7f7f7;
-    font-size: 16px;
-    background-color: yellowgreen;
-  }
-  
-  #write-page input[type="text"] {
-    height: 40px;
-  }
-  
-  #write-page textarea {
-    height: auto;
-    resize: none;
-    min-height: 100px;
-  }
-  
-  #write-page input[type="submit"] {
-    background-color: #8A2BE2;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  #write-page input[type="submit"]:hover {
-    background-color: #6B238E;
-  }
-  
-
-/* blog_app/static/blog_app/post.css */
-/* 
-#write-page{
-    margin: auto;
-    width: 80%;
-    border: 1px solid #ccc;
-    padding: 20px;
+.post-page h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0%;
 }
 
-h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-top: 0;
+#write-page form {
+  display: flex;
+  flex-direction: column;
 }
 
-form {
-    margin-top: 20px;
+#write-page input[type="text"],
+#write-page textarea {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: yellowgreen;
 }
 
-label {
-    font-size: 20px;
-    font-weight: bold;
+#write-page textarea {
+  height: auto;
+  resize: none;
+  min-height: 100px;
 }
 
-input[type="text"], textarea {
-    display: block;
-    width: 100%;
-    font-size: 18px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+#write-page input[type="submit"] {
+  background-color: #729D39;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-bottom: 10px;
 }
 
-input[type="submit"] {
-    background-color: #9900cc;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+#write-page input[type="submit"]:hover {
+  background-color: #81b32b;
 }
 
-input[type="submit"]:hover {
-    background-color: #b366ff;
+.post-page a{
+  cursor: pointer;
 }
- */
-
+  
