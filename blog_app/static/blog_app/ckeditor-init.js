@@ -19,7 +19,7 @@ CKEDITOR.replace('default', {
         ['Format', 'FontSize', 'TextColor', 'BGColor', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
         ['NumberedList', 'BulletedList', 'Blockquote', 'Code', 'Source']
     ],
-    height: 300
+    height: 300,
 });
 
 

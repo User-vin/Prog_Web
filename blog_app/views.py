@@ -357,3 +357,5 @@ def contact_view(request):
     }
     return render(request, 'blog_app/contact.html', context)
 
+def about_us(request):
+    return render(request, "blog_app/aboutus.html")
