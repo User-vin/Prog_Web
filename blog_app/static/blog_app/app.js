@@ -5,7 +5,7 @@ function openSide(){
 function handleMousePos(event) {
     var mouseClickWidth = event.clientX;
     if(mouseClickWidth>=250){
-          document.getElementById("sidebar").style.width= "0";
+        document.getElementById("sidebar").style.width= "0";
     }
 }
 

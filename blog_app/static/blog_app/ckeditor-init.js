@@ -10,7 +10,7 @@ CKEDITOR.replace('default', {
     filebrowserUploadUrl: '/ckeditor/upload/',
     filebrowserBrowseUrl: '/filer/browse/',
     filebrowserUploadMethod: 'form',
-    extraPlugins: 'uploadimage,image2,justify,widget',
+    extraPlugins: 'uploadimage,image2,justify,widget,autoheight',
     toolbar: [
         ['Undo', 'Redo'],
         ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],

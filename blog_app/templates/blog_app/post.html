@@ -11,38 +11,36 @@
 </head>
 <body>
     {% block index %}
+    <div class="post-page">
+        <h2>Créez votre post</h2>
+        <form enctype="multipart/form-data" action="" method="post">
+          {% csrf_token %}
+          {{ form.media }}
+          {{ form.as_p }}
+          <input type="submit" value="Créer le post">
+        </form>
+        <a href="#" onclick="location.href='{% url "index" %}'">
+          Retour
+        </a>
+    </div>
 
-        <div class="post-page">
-            <h2>Créez votre post</h2>
-            <form enctype="multipart/form-data" action="" method="post">
-              {% csrf_token %}
-              {{ form.media }}
-              {{ form.as_p }}
-              <input type="submit" value="Créer le post">
-            </form>
-            <a href="#" onclick="location.href='{% url "index" %}'">
-                Retour
-            </a>
-        </div>
-        
-
-        {% for post in posts %}
-        post:
-        <div class="post">
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.date }}</p>
-            <p>{{ post.username }}</p>
-            <p>{{ post.categorie }}</p>
-        </div>
-        {% endfor %}
+    {% for post in posts %}
+    post:
+    <div class="post">
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.date }}</p>
+      <p>{{ post.username }}</p>
+      <p>{{ post.categorie }}</p>
+    </div>
+    {% endfor %}
     {% endblock index %}
 </body>
 
 {% load static %}
 
-<link href="{% static 'ckeditor/ckeditor.css' %}" rel="stylesheet">
+<!-- <link href="{% static 'ckeditor/ckeditor.css' %}" rel="stylesheet">
 <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
-<script src="{% static 'ckeditor-init.js' %}"></script>
+<script src="{% static 'ckeditor-init.js' %}"></script> -->
 <script>
     function adjustHeight(el) {
       el.style.height = "auto";
