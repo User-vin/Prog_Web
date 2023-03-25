@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils.html import strip_tags
 
 # gestionnaire par défaut plus disponible car User remplacé par une version personnalisée (UserModels)
 class UserManager(BaseUserManager):
@@ -73,6 +74,9 @@ class PostModels(models.Model): # structure d'un article de blog
     testcontent = models.FileField(upload_to='posts_image/', blank=False)
     objects = PostManager()
     
+    
+    def get_content_as_text(self):
+        return strip_tags(self.content)
     
 
 class CommentModels(models.Model):

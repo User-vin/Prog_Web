@@ -60,10 +60,11 @@
         {% endif %}
     </nav>
 
+    <div>
     {% block index %}
     missing block index
     {% endblock index %}
-
+    </div>
 
     <footer>
         <p class="copyright">&copy; 2023 - MANGER MANGER</p>
@@ -81,19 +82,16 @@
         const logoutButton = document.getElementById('logout-btn');
       
         logoutButton.addEventListener('click', () => {
-          const xhr = new XMLHttpRequest();
-          xhr.open('POST', '/logout/');
-          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-          xhr.onload = () => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/logout/');
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.onload = () => {
             if (xhr.status === 200) {
-              location.reload();
+                location.reload();
             }
-          };
-          xhr.send();
+            };
+            xhr.send();
         });
-
-        
-
     </script>
     <script src="{% static '/blog_app/app.js' %}"></script>
     {% block script %}

@@ -61,9 +61,9 @@
                             {{ post.username }}
                         </a>
                         
-                        <p class="description-text">
-                            {{ post.content|safe|truncatechars:100 }}
-                        </p>
+                        <div class="description-text">
+                            {{ post.content|safe }}
+                        </div>
                     </div>
                     <div class="last-row">
                         <div class="zone-icons icons boutons">

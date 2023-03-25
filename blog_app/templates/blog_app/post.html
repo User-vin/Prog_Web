@@ -15,10 +15,10 @@
         <div class="post-page">
             <h2>Créez votre post</h2>
             <form enctype="multipart/form-data" action="" method="post">
-                {% csrf_token %}
-                {{ form.media }}
-                {{ form.as_p }}
-                <input type="submit" value="Créer le post">
+              {% csrf_token %}
+              {{ form.media }}
+              {{ form.as_p }}
+              <input type="submit" value="Créer le post">
             </form>
             <a href="#" onclick="location.href='{% url "index" %}'">
                 Retour

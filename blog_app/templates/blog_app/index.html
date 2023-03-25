@@ -62,9 +62,9 @@
                         {{ first_post.username }}
                     </a>
                 </div>
-                <p class="description-text">
-                    {{ first_post.content|safe|truncatechars:200 }}
-                </p>
+                <div class="description-text">
+                    {{ first_post.get_content_as_text|safe }}
+                </div>
                 <div class="icons boutons">
                     {% include "blog_app/favori_btn.html" with post=first_post %}
                     {% include "blog_app/bookmark_btn.html" with post=first_post %}
@@ -91,9 +91,9 @@
                         {{ second_post.username }}
                     </a>
                 </div>
-                <p class="description-text">
-                    {{ second_post.content|safe|truncatechars:200 }}
-                </p>
+                <div class="description-text">
+                    {{ second_post.content|safe }}
+                </div>
                 <div class="icons boutons">
                     {% include "blog_app/favori_btn.html" with post=second_post %}
                     {% include "blog_app/bookmark_btn.html" with post=second_post %}
@@ -128,9 +128,9 @@
                         <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
                             {{ post.username }}
                         </a>
-                        <p class="description-text">
-                            {{ post.content|safe|truncatechars:100 }}
-                        </p>
+                        <div class="description-text">
+                            {{ post.content|safe}}
+                        </div>
                         
                     </div>
                     <div class="last-row">

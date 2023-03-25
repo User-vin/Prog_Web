@@ -60,7 +60,7 @@
                                 </a>
                                 <div class="description-text"
                                     onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                                    {{ post.content|safe|truncatechars:25|safe  }}
+                                    {{ post.content|safe }}
                                 </div>
                             </div>
                             <div class="icons boutons">
@@ -92,7 +92,7 @@
                                 </a>
                                 <div class="description-text"
                                     onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                                    {{ post.content|safe|truncatechars:25 }}
+                                    {{ post.content|safe }}
                                 </div>
                             </div>
                             <div class="icons boutons">

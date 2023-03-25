@@ -33,7 +33,7 @@ class CreatePostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Titre', 'id': 'id_write_title'}), # affiche du texte dans le champ
             # 'content': forms.Textarea(attrs={'placeholder': 'Contenu de l\'article', 'id': 'id_write_content'}),
             # 'content': CKEditorWidget(),
-            'content': forms.CharField(widget=CKEditorUploadingWidget()),
+            'content': forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'post-content'})),
         }
         label_suffix = ''
     
