@@ -23,7 +23,7 @@
           Retour
         </a>
     </div>
-
+<!-- 
     {% for post in posts %}
     post:
     <div class="post">
@@ -32,7 +32,7 @@
       <p>{{ post.username }}</p>
       <p>{{ post.categorie }}</p>
     </div>
-    {% endfor %}
+    {% endfor %} -->
     {% endblock index %}
 </body>
 
@@ -41,19 +41,4 @@
 <!-- <link href="{% static 'ckeditor/ckeditor.css' %}" rel="stylesheet">
 <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
 <script src="{% static 'ckeditor-init.js' %}"></script> -->
-<script>
-    function adjustHeight(el) {
-      el.style.height = "auto";
-      el.style.height = (el.scrollHeight)+"px";
-    }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-      var textareas = document.querySelectorAll("textarea");
-      textareas.forEach(function(textarea) {
-        adjustHeight(textarea);
-        textarea.addEventListener("input", function() {
-          adjustHeight(this);
-        });
-      });
-    });
-</script>
+
