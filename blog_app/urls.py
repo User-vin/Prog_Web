@@ -29,7 +29,10 @@ urlpatterns = [
     path('post_display/<int:pk>/<str:username>/<str:categorie>/', views.post_detail, name='post_detail'),
 
     path('contact/', views.contact_view, name='contact_view'),
-    path('about-us/', views.about_us, name="about_us")
+    path('about-us/', views.about_us, name="about_us"),
+    
+    path('search-results/', views.search_resutls, name="search-results"),
+    path('search-recommendations/', views.search_recommandations, name="search-recommandations"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     # static permet de créer une route entre MEDIA_URL et MEDIA_ROOT, 

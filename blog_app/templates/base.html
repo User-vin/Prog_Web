@@ -35,29 +35,48 @@
     </section>
 
     <nav class="nav">
-        <div class="menu" onclick="openSide()">
-        <div id="sidebar"></div>
-            <button><i class="fa-solid fa-bars"></i></button>
-        </div>
-        <div class="links">
-            <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
-            <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About us</li>
-            <li class="transition-btn" onclick="location.href='{% url "posts_filter" filter_by='bookmark' value=request.user %}'">Bookmarks</li>
-            <li class="transition-btn" onclick="location.href='{% url "list_posts" %}'">Posts</li>
-            <li class="transition-btn" onclick="location.href='{% url "post" %}'">Write</li>
-        </div>
-        {% if user.is_authenticated %}
-            <div class="button-log-regis">
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
-            </form>       
-        {% else %}
-            <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
-                Login/Register
-            </button>
+        <div class="centered">
+            <div class="menu" onclick="openSide()">
+            <div id="sidebar"></div>
+                <button><i class="fa-solid fa-bars"></i></button>
             </div>
-        {% endif %}
+            <div class="links">
+                <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
+                <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About us</li>
+                <li class="transition-btn" onclick="location.href='{% url "posts_filter" filter_by='bookmark' value=request.user %}'">Bookmarks</li>
+                <li class="transition-btn" onclick="location.href='{% url "list_posts" %}'">Posts</li>
+                <li class="transition-btn" onclick="location.href='{% url "post" %}'">Write</li>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="button-log-regis">
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
+                </form>       
+            {% else %}
+                <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
+                    Login/Register
+                </button>
+                </div>
+            {% endif %}
+        </div>
+        <form action="{% url 'search-results' %}" 
+            method="GET" 
+            class="search" >
+            {% csrf_token %}       
+            <input type="text" 
+            hx-post="{% url 'search-recommandations' %}"
+            hx-target="#search-recommandations"
+            hx-trigger="keyup changed delay:500ms"
+            placeholder="Search..." 
+            class="search-input" 
+            name="search" >
+
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+        <div id="container-search-recommandations">
+            <div id="search-recommandations"></div>
+        </div>
     </nav>
 
     <div>
@@ -75,10 +94,20 @@
     <script>
         document.body.addEventListener('htmx:configRequest', (e) => {
             e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-            })
-    </script>
+        })
 
-    <script>
+        document.addEventListener('click', function(event) {
+            var searchInput = document.querySelector('.search-input');
+            var searchReco = document.querySelector('#search-recommandations');
+            var containerSearchReco = document.querySelector('#container-search-recommandations');
+            if (!searchReco.contains(event.target) && !containerSearchReco.contains(event.target) && !searchInput.contains(event.target)) {
+                searchReco.style.display = 'none';
+            }
+            if(searchInput.contains(event.target)){
+                searchReco.style.display = 'block';
+            }
+        });
+
         const logoutButton = document.getElementById('logout-btn');
       
         logoutButton.addEventListener('click', () => {
@@ -92,6 +121,8 @@
             };
             xhr.send();
         });
+
+        
     </script>
     <script src="{% static '/blog_app/app.js' %}"></script>
     {% block script %}

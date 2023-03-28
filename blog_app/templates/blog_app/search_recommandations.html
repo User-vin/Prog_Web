@@ -1,0 +1,43 @@
+
+{% if results %}
+
+    {% csrf_token %}
+    <ul id="list">
+        {% for result in results|slice:":10" %}
+            <li class="result" onclick="location.href='{% url 'post_detail' pk=result.id username=result.username categorie=result.categorie %}'">
+                {{ result.title }}
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+
+<style>
+
+    @import url('base.css');
+
+    #list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .result {
+        display: flex;
+        /* height: 10px; */
+        border: 1px solid black;
+        background-color: aliceblue;
+        cursor: pointer;
+        align-items: center;
+        padding: 2px;
+        margin-bottom: 2px;
+        transition: var(--background-color) 0.3s ease;
+    }
+    
+    .result:hover {
+        background-color: var(--background-color);
+    }
+    
+</style>
+
+

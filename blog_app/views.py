@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.views import LogoutView
 from django.db import IntegrityError
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
@@ -281,24 +281,6 @@ def posts(request, filter_by, value):
     print("message: ",context['message'])
     return render(request, 'blog_app/posts.html', context)
 
-# @login_required
-# def bookmarks(request):
-#     """Retrieves all posts bookmarked by the connected user.
-
-#     Args:
-#         request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
-
-#     Returns:
-#         _type_: HTTP response object that returns an HTML page with the posts bookmarked by the user.
-#     """
-#     bookmarked_posts = request.user.bookmark.all()
-#     context = {
-#         'bookmarked_posts': bookmarked_posts,
-#     }
-#     return render(request, 'blog_app/bookmarks.html', context)
-
-
-
 def comments_area(request, pk):
     print("")
     print("-----esapce commentaires-----")
@@ -359,3 +341,69 @@ def contact_view(request):
 
 def about_us(request):
     return render(request, "blog_app/aboutus.html")
+
+
+from django.http import JsonResponse
+
+# def search(request):
+#     """This method allows you to search for objects in a database using specific search criteria.
+#         search by title and username
+
+#     Args:
+#         request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
+
+#     Returns:
+#         _type_: html with all objects 
+#     """
+#     # récupère la requete applée 'title/username'
+#     query = request.GET.get('title/username')
+#     if query:
+#         # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
+#         # | opératuer de django pour combiné les requetes
+#         posts = models.PostModels.objects.filter(Q(title__contains=query) | Q(username__contains=query)).order_by('-id')
+#         if not posts:
+#             return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+#     # return render(request, "blog_app/posts.html", {'posts': posts})
+#     data = [{'title': post.title, 'username': post.username} for post in posts]
+    
+#     return JsonResponse(data, safe=False) 
+
+
+def search_resutls(request):
+    """This method allows you to search for objects in a database using specific search criteria.
+        search by title and username
+
+    Args:
+        request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
+
+    Returns:
+        _type_: html with all objects 
+    """
+    # récupère la requete applée 'title/username'
+    query = request.GET.get('search')
+    if query:
+        # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
+        # | opératuer de django pour combiné les requetes
+        posts = models.PostModels.objects.filter(Q(title__contains=query) | Q(username__contains=query)).order_by('-id')
+        if posts:
+            return render(request, "blog_app/posts.html", {'posts': posts})     
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+    
+
+
+def search_recommandations(request):
+    search_text = request.POST.get('search')
+    # results = models.PostModels.objects.filter(Q(title__contains=search_text) | Q(username__contains=search_text)).order_by('-id')
+    if search_text:
+        results = models.PostModels.objects.filter(title__contains=search_text)
+    else:
+        results = ""
+    context = {
+        'results': results,
+    }
+    return render(request, 'blog_app/search_recommandations.html', context)
+    
+    
+    
+    

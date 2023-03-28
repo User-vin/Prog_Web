@@ -94,6 +94,15 @@ nav.nav{
     z-index: 1;
 }
 
+nav .centered{
+    width: 100%;
+    height: 40px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .menu{
     margin-left: 15%;
 }
@@ -138,6 +147,44 @@ nav.nav button{
 
 .links li{
     cursor: pointer;
+}
+
+    /* search */
+
+.search{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    
+.search-input{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 40%;
+    font-size: 16px;
+    outline: none;
+}
+    
+.search-btn{
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.search-btn:hover{
+    background-color: var(--background-color);
+}
+
+#container-search-recommandations{
+    position: absolute;
+    height: 0px;
+    margin-left: 15px;
+    bottom: 0;
+    /* margin-top: 230px; */
 }
 
 
