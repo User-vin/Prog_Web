@@ -45,10 +45,7 @@ section.top-page{
 
 header.header{
     align-items: center;
-}
-
-header.header img{
-    width: 50px;
+    height: 50px;
 }
 
 /* landing-page */
@@ -61,9 +58,20 @@ header.header img{
     background-size: cover;
 }
 
+.top-landing-page{
+    display: flex;
+    flex-direction: row;
+}
+
 .landing-page-title{
     font-size: 30px;
     color: white;
+    margin-top: 0;
+}
+
+.top-landing-page img{
+    height: 50px;
+    width: 50px;
 }
 
 .landing-page-title,
@@ -87,6 +95,7 @@ nav.nav{
     top: 0;
     height: 40px;;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background-color: white;
@@ -95,7 +104,7 @@ nav.nav{
 }
 
 nav .centered{
-    width: 100%;
+    width: 80%;
     height: 40px;
     margin: auto;
     display: flex;
@@ -166,12 +175,17 @@ nav.nav button{
     font-size: 16px;
     outline: none;
 }
+
+.search-input:focus{
+    border: 2px solid #111;
+}
     
 .search-btn{
     color: black;
     border-radius: 5px;
     padding: 10px;
     margin-left: 10px;
+    margin-right: 0;
     cursor: pointer;
 }
 

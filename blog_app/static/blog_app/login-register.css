@@ -1,6 +1,5 @@
 *{
     font-family: 'Montserrat', sans-serif;
-    margin: 0;
 }
 
 .login-page{
@@ -14,6 +13,7 @@
 }
 
 .login-page h2{
+    margin: 0;
     margin-bottom: 40px;
 }
 
@@ -22,6 +22,7 @@
 }
 
 .interface{
+    margin: 0;
     padding-left: 2%;
     padding-right: 2%;
     padding-top: 20px;
@@ -32,20 +33,20 @@
     border-radius: 5%;
 }
 
-form{
+.form_user{
     display: flex;
     flex-direction: column;
     width: 80%;
 }
 
-form input{
+.form_user input{
     margin-bottom: 10px;
     font-size: 14px;
     padding-top: 3px;
     padding-bottom: 3px;
 }
 
-input[type="submit"]{
+.interface input[type="submit"]{
     color: white;
     background-color: #729D39;
     padding-top: 10px;
@@ -55,13 +56,14 @@ input[type="submit"]{
     transition: 0.2s ease-in-out;
 }
 
-input[type="submit"]:hover{
+.interface input[type="submit"]:hover{
     background-color: #81b32b;
 }
 
-form p{
+.form_user p{
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 
 #create-account, #authentificate{
@@ -82,5 +84,7 @@ form p{
 #create-account p, #authentificate p 
 {
     width: fit-content;
+    margin: 0;
     margin-right: 3px;
+    margin-bottom: 5px;
 }

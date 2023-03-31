@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 CKEDITOR.replace('default', {
     allowedContent: true,
     filebrowserUploadUrl: '/ckeditor/upload/',

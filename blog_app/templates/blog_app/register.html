@@ -16,7 +16,7 @@
             method="post" permet d'envoyer les données comme requête http post
             novalidate indique au navigateur de ne pas validé les entrés dans le formulaire
             novalidate à enlever par la suite  -->
-            <form action="" method="post">
+            <form action="" method="post" class="form_user">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Sign Up">

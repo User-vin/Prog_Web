@@ -170,7 +170,7 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
-        'width': '40%',
+        'width': '60%',
         'autoGrow_minHeight': 300,
         'extraPlugins': 'autogrow',
     }

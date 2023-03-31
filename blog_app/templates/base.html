@@ -17,14 +17,13 @@
 <body id="page">
     
     <section class="top-page">
-        <header class="header">
-            <img src="{% static 'images/logos/burgerlogo.png' %}" alt="logo">
-            <!--<h1 class="header-title"> </h1> -->
-        </header>
         <div class="landing-page">
-            <h2 class="landing-page-title">
-                TITLE
-            </h2>
+            <div class="top-landing-page">
+                <img src="{% static 'images/logos/burgerlogo.png' %}" alt="logo">
+                <h2 class="landing-page-title">
+                    TITLE
+                </h2>    
+            </div>
             <div class="social-media">
                 <i class="fa-brands fa-twitter transition-btn"></i>
                 <i class="fa-brands fa-instagram transition-btn"></i>
@@ -35,11 +34,27 @@
     </section>
 
     <nav class="nav">
+        <form action="{% url 'search-results' %}" 
+                method="GET" 
+                class="search" >
+                {% csrf_token %}       
+                <input type="text" 
+                hx-post="{% url 'search-recommandations' %}"
+                hx-target="#search-recommandations"
+                hx-trigger="keyup changed delay:500ms"
+                placeholder="Search..." 
+                class="search-input" 
+                name="search" >
+
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+
         <div class="centered">
             <div class="menu" onclick="openSide()">
-            <div id="sidebar"></div>
+                <div id="sidebar"></div>
                 <button><i class="fa-solid fa-bars"></i></button>
             </div>
+
             <div class="links">
                 <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
                 <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About us</li>
@@ -60,20 +75,7 @@
                 </div>
             {% endif %}
         </div>
-        <form action="{% url 'search-results' %}" 
-            method="GET" 
-            class="search" >
-            {% csrf_token %}       
-            <input type="text" 
-            hx-post="{% url 'search-recommandations' %}"
-            hx-target="#search-recommandations"
-            hx-trigger="keyup changed delay:500ms"
-            placeholder="Search..." 
-            class="search-input" 
-            name="search" >
 
-            <button type="submit" class="search-btn">Search</button>
-        </form>
         <div id="container-search-recommandations">
             <div id="search-recommandations"></div>
         </div>
