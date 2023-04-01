@@ -34,6 +34,11 @@
     </section>
 
     <nav class="nav">
+        <div class="menu" onclick="openSide()">
+            <div id="sidebar"></div>
+            <button><i class="fa-solid fa-bars"></i></button>
+        </div>
+        
         <form action="{% url 'search-results' %}" 
                 method="GET" 
                 class="search" >
@@ -46,15 +51,12 @@
                 class="search-input" 
                 name="search" >
 
-                <button type="submit" class="search-btn">Search</button>
-            </form>
+                <button type="submit" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+        </form>
 
         <div class="centered">
-            <div class="menu" onclick="openSide()">
-                <div id="sidebar"></div>
-                <button><i class="fa-solid fa-bars"></i></button>
-            </div>
-
             <div class="links">
                 <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
                 <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About us</li>

@@ -66,7 +66,8 @@ header.header{
 .landing-page-title{
     font-size: 30px;
     color: white;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .top-landing-page img{
@@ -93,11 +94,11 @@ nav.nav{
     position: sticky;
     width: 100%;
     top: 0;
-    height: 40px;;
+    height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     background-color: white;
     box-shadow: 2px 2px 5px #888888;
     z-index: 1;
@@ -106,14 +107,13 @@ nav.nav{
 nav .centered{
     width: 80%;
     height: 40px;
-    margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .menu{
-    margin-left: 15%;
+    margin-left: 15px;
 }
 
 #sidebar{
@@ -158,10 +158,9 @@ nav.nav button{
     cursor: pointer;
 }
 
-    /* search */
+/* search */
 
 .search{
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
