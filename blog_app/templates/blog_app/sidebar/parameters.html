@@ -1,0 +1,34 @@
+{% extends 'blog_app\sidebar\base_account.html' %}
+
+
+{% block content %}
+    <form action="{% url 'parameters' %}" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="column column1">
+                <h2>Informations de l'utilisateur</h2>
+                <p>Username: {{ form.username }}</p>
+                <p>Email: {{ form.email }}</p>
+                <div class="more-inf">
+                    <hr>
+                    <h2>Posts</h2>
+                    <p>Number of posts: {{ posts_count }}</p>
+                    <p>Number of bookmarks: {{ bookmarked_count }}</p>
+                    <p>Number of favorites: {{ fav_count }}</p>
+                    <br>
+                    <button value="submit"
+                        class="modify-apply-btn">
+                        Apply
+                    </button>
+                </div>
+            </div>
+            <div class="column column2">
+                <h2>Description de l'utilisateur</h2>
+                <p>{{ form.description }}</p>
+            </div>
+        </div>
+
+        
+    </form>
+{% endblock %}
+

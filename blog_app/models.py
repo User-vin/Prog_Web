@@ -8,19 +8,24 @@ from django.contrib.auth.models import BaseUserManager
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.html import strip_tags
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
+
+
 
 # gestionnaire par défaut plus disponible car User remplacé par une version personnalisée (UserModels)
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, description, password=None, **extra_fields):
         """
         Créé et sauvegarde un utilisateur avec l'email et le mot de passe donnés
         """
         if not email:
             raise ValueError('L\'email est obligatoire')
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, description=description, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -35,7 +40,7 @@ class UserManager(BaseUserManager):
 
 
 class UserModels(AbstractUser):
-    biographie = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     
     objects = UserManager()
     

@@ -10,6 +10,22 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from ckeditor_uploader.fields import RichTextUploadingField
 from . import models
 
+from django.contrib.auth.forms import UserChangeForm
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = models.UserModels
+        fields = '__all__'
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.UserModels
+        fields = ['username', 'email' , 'description']
+
+    description = forms.Textarea()
+
+
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(), required=True)
     password = forms.CharField(widget=forms.PasswordInput(), required=True)

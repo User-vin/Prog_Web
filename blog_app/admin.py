@@ -4,9 +4,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import UserModels, PostModels, CommentModels
 
+from .forms import CustomUserChangeForm
+
 class CustomUserAdmin(UserAdmin):
-    # Personnaliser les champs affichés dans la liste des utilisateurs
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    form = CustomUserChangeForm
+    fieldsets = UserAdmin.fieldsets + (
+        ('Personal Info', {'fields': ('description',)}),
+    )
+
 
 class CustomPostAdmin(admin.ModelAdmin):
     list_display = ('username', 'categorie', 'title', 'date')

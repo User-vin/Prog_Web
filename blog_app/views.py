@@ -119,7 +119,45 @@ def register_view(request):
 class logout_view(LogoutView):
     next_page = '/'
     
-    
+@login_required
+def account_view(request):
+    user = request.user
+    posts_count = models.PostModels.objects.filter(username=user).count
+    bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
+    fav_count = models.PostModels.objects.filter(favoris=user).count
+    context = {
+        'user': user,
+        'posts_count': posts_count,
+        'bookmarked_count': bookmarked_count,
+        'fav_count': fav_count,
+    }
+    return render(request, "blog_app/sidebar/account.html", context)
+
+@login_required
+def parameters_view(request):
+    user = request.user
+    form = forms.UserUpdateForm(instance=user)
+    posts_count = models.PostModels.objects.filter(username=user).count
+    bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
+    fav_count = models.PostModels.objects.filter(favoris=user).count
+    print("dans la méthode")
+    print("request.method: ",request.method)
+    if request.method == 'POST':
+        print("----------------------------")
+        form = forms.UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            print("----------------------------")
+            return redirect('account')
+    print("azeazeza")
+    context = {
+        'form': form,
+        'posts_count': posts_count,
+        'bookmarked_count': bookmarked_count,
+        'fav_count': fav_count,
+    }
+    return render(request, "blog_app/sidebar/parameters.html", context)
+
 def post_view(request):
     """This method is used to manage post creation.
 
@@ -253,9 +291,18 @@ def posts(request, filter_by, value):
     elif filter_by == 'categorie':
         post_list = models.PostModels.objects.filter(categorie=value).order_by('-id')
     elif filter_by == 'bookmark':
-        print(request.get_full_path())
         if request.user.is_authenticated:
             post_list = models.PostModels.objects.filter(bookmark=request.user).order_by('-id')
+        else:
+            return redirect(reverse('login') + '?next=' + request.get_full_path())
+    elif filter_by == 'favorite':
+        if request.user.is_authenticated:
+            post_list = models.PostModels.objects.filter(favoris=request.user).order_by('-id')
+        else:
+            return redirect(reverse('login') + '?next=' + request.get_full_path())
+    elif filter_by == 'myPosts':
+        if request.user.is_authenticated:
+            post_list = models.PostModels.objects.filter(username=request.user).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
         
@@ -341,33 +388,6 @@ def contact_view(request):
 
 def about_us(request):
     return render(request, "blog_app/aboutus.html")
-
-
-from django.http import JsonResponse
-
-# def search(request):
-#     """This method allows you to search for objects in a database using specific search criteria.
-#         search by title and username
-
-#     Args:
-#         request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
-
-#     Returns:
-#         _type_: html with all objects 
-#     """
-#     # récupère la requete applée 'title/username'
-#     query = request.GET.get('title/username')
-#     if query:
-#         # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
-#         # | opératuer de django pour combiné les requetes
-#         posts = models.PostModels.objects.filter(Q(title__contains=query) | Q(username__contains=query)).order_by('-id')
-#         if not posts:
-#             return redirect(request.META.get('HTTP_REFERER', '/'))
-        
-#     # return render(request, "blog_app/posts.html", {'posts': posts})
-#     data = [{'title': post.title, 'username': post.username} for post in posts]
-    
-#     return JsonResponse(data, safe=False) 
 
 
 def search_resutls(request):

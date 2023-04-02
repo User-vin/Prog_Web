@@ -1,4 +1,4 @@
-<!-- blog/blog_app/templates/base.html -->
+<!-- blog/blog_app/templates/base_wt_top_page.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -15,23 +15,6 @@
     <title>Blog</title>
 </head>
 <body id="page">
-    
-    <section class="top-page">
-        <div class="landing-page">
-            <div class="top-landing-page">
-                <img src="{% static 'images/logos/burgerlogo.png' %}" alt="logo">
-                <h2 class="landing-page-title">
-                    TITLE
-                </h2>    
-            </div>
-            <div class="social-media">
-                <i class="fa-brands fa-twitter transition-btn"></i>
-                <i class="fa-brands fa-instagram transition-btn"></i>
-                <i class="fa-brands fa-tiktok transition-btn"></i>
-                <i class="fa-brands fa-discord transition-btn"></i>
-            </div>
-        </div>
-    </section>
 
     <nav class="nav">
         <div class="menu" onclick="openSide()">
@@ -95,10 +78,10 @@
     {% endblock index %}
     </div>
 
-    <footer>
+    <!-- <footer>
         <p class="copyright">&copy; 2023 - MANGER MANGER</p>
         <a href="#" class="cgv transition-btn" style="text-decoration: none;">Conditions générales de ventes</a>
-    </footer>
+    </footer> -->
 
     <script src="https://unpkg.com/htmx.org@1.6.0"></script>
     <script>

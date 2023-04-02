@@ -6,6 +6,7 @@
 
 :root{
     --background-color: #729D39;
+    --transition-btn: .4s;
 }
 
 *{
@@ -27,7 +28,7 @@ body{
 
 .transition-btn:hover{
     color: var(--background-color);
-    transition: .4s;
+    transition: var(--transition-btn);
     cursor: pointer;
 }
 
@@ -116,17 +117,39 @@ nav .centered{
     margin-left: 15px;
 }
 
+/* sidebar */
+
 #sidebar{
+    border-right: 1px solid #111;
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
 }
+
+#sidebar ul{
+    list-style-type: none;
+    margin-top: 100px;
+    padding: 0;
+}
+
+#sidebar li{
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 45px;
+}
+
+#sidebar li a{
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 
 nav.nav .button-log-regis{
     margin-right: 15%;

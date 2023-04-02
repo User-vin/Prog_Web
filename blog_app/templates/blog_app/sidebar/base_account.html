@@ -1,0 +1,65 @@
+{% extends 'base_less.html' %}
+
+
+{% block index %}
+    
+    <style>
+        .container{
+            display: grid;
+            grid-template-columns: 40% 60%;
+            margin: 50px auto;
+            margin-top: 10%;
+            max-width: 70%;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);  
+        }
+
+        .column1{
+            padding: 20px;
+        }
+
+        .column2{
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-left: 1px solid #ccc;
+        }
+
+        .more-inf{
+            margin-top: 50px;
+        }
+
+        #id_description{
+            width: 100%;
+            min-height: 100%;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            border: none;
+        }
+
+        .modify-apply-btn{
+            color: block; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px;
+            border: 1px solid black; 
+            cursor: pointer;
+        }
+
+        .modify-apply-btn:hover{
+            background-color: #4CAF50; 
+            color: white;
+            border: none; 
+        }
+    </style>
+    
+    {% block content %}
+
+    {% endblock %}
+
+{% endblock index %}
+
+

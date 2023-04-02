@@ -34,6 +34,10 @@ urlpatterns = [
     path('search-results/', views.search_resutls, name="search-results"),
     path('search-recommendations/', views.search_recommandations, name="search-recommandations"),
 
+    # sidebar pages
+    path('account/', views.account_view, name="account"),
+    path('parameters/', views.parameters_view, name="parameters"),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     # static permet de créer une route entre MEDIA_URL et MEDIA_ROOT, 
     # c'est à dire une route entre l'url et le fichier physique contenant les fichiers multimédias
