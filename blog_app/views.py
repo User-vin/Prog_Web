@@ -249,8 +249,6 @@ def post_detail(request, pk, user_id, categorie):
         _type_: HTTP response object that renders an HTML page template with the PostModels object.
     """
     post = get_object_or_404(models.PostModels, pk=pk)
-    # print("username: ",post.username)
-    # print("username: ",username)  
     by_username = models.PostModels.objects.filter(user_id=request.user.id).exclude(id__in=[post.id]).order_by('-id')[:2]
     by_categorie = models.PostModels.objects.filter(categorie=categorie).exclude(id__in=[post.id]+[post2.id for post2 in by_username]).order_by('-id')[:2]
     print("post_username: ",by_username)
@@ -293,8 +291,13 @@ def posts(request, filter_by, value):
         _type_: _description_
     """
     print("------------------------------------------------------")
+    print("value: ",value)
+    print("type: ",type(value))
+    # print("value.username: ",value.id)
+    # print("type: ",type(value.id))
+    print("id: ",request.user.id)
     if filter_by == 'username':
-        post_list = models.PostModels.objects.filter(username=value).order_by('-id')
+        post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
     elif filter_by == 'date':
         post_list = models.PostModels.objects.filter(date=value).order_by('-date')
     elif filter_by == 'categorie':
@@ -311,7 +314,7 @@ def posts(request, filter_by, value):
             return redirect(reverse('login') + '?next=' + request.get_full_path())
     elif filter_by == 'myPosts':
         if request.user.is_authenticated:
-            post_list = models.PostModels.objects.filter(user_id=request.user.id).order_by('-id')
+            post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
         
@@ -331,10 +334,15 @@ def posts(request, filter_by, value):
         context['date'] = value
     elif filter_by == 'categorie':
         context['categorie'] = value
-
-    print("filter_by: ",filter_by)
+    print("------------------------------------------------------")
     print("value: ",value)
-    print("message: ",context['message'])
+    print("type: ",type(value))
+    # print("value.username: ",value.username)
+    # print("type: ",type(value.username))
+    print("id: ",request.user.id)
+    # print("filter_by: ",filter_by)
+    # print("value: ",value)
+    # print("message: ",context['message'])
     return render(request, 'blog_app/posts.html', context)
 
 def comments_area(request, pk):

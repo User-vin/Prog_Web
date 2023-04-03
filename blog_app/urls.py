@@ -25,7 +25,7 @@ urlpatterns = [
 
     #-----
     
-    path('posts/<str:filter_by>/<str:value>/', views.posts, name="posts_filter"),
+    path('posts/<str:filter_by>/<value>/', views.posts, name="posts_filter"),
     path('post_display/<int:pk>/<str:user_id>/<str:categorie>/', views.post_detail, name='post_detail'),
 
     path('contact/', views.contact_view, name='contact_view'),

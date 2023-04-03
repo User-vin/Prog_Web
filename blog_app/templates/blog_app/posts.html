@@ -57,7 +57,7 @@
                             {{ post.date }}
                         </a>
                         <span>/</span>
-                        <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                        <a href="{% url 'posts_filter' filter_by='username' value=post.user_id.id %}" class="author transition-btn">
                             {{ post.user_id.username }}
                         </a>
                         
