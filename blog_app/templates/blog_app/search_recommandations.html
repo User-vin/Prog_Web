@@ -22,23 +22,27 @@
     @import url('base.css');
 
     #list {
+        position: absolute;
         list-style-type: none;
         margin: 0;
         padding: 0;
+        margin-left: 55px;
+        
     }
-    
+
     .result {
         display: flex;
-        /* height: 10px; */
+        height: 30px;
         border: 1px solid black;
-        background-color: aliceblue;
+        background-color: white;
         cursor: pointer;
         align-items: center;
-        padding: 2px;
+        padding: 4px;
+        padding-left: 5px;
         margin-bottom: 2px;
         transition: var(--background-color) 0.3s ease;
     }
-    
+
     .result:hover {
         background-color: var(--background-color);
     }

@@ -169,11 +169,18 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
-        'width': '60%',
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],'/',
+            ['Format'],'/',
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],'/',
+            ['Link', 'Unlink'],'/',
+            ['RemoveFormat', 'Source'],'/',
+            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
+        ],
+        # 'width': '60%',
         'autoGrow_minHeight': 300,
-        'extraPlugins': 'autogrow',
+        'extraPlugins': ','.join(['autogrow','uploadimage']),
     }
 }
-
 

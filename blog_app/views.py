@@ -260,8 +260,8 @@ def post_detail(request, pk, user_id, categorie):
                 button_value = request.POST['add-comment']
                 if button_value == 'pressed':
                     content = request.POST.get('content')
-                    models.CommentModels.objects.create(post=post, username=username, content=content)
-                    return redirect('post_detail', pk=pk, username=username, categorie=categorie)
+                    models.CommentModels.objects.create(post=post, content=content)
+                    return redirect('post_detail', pk=pk, username=user_id, categorie=categorie)
     else:
         form = None
     

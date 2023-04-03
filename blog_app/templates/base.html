@@ -44,6 +44,9 @@
                 </ul>
             </div>
             <button><i class="fa-solid fa-bars"></i></button>
+            <div id="container-search-recommandations">
+                <div id="search-recommandations"></div>
+            </div>
         </div>
         
         <form action="{% url 'search-results' %}" 
@@ -57,7 +60,7 @@
             placeholder="Search..." 
             class="search-input" 
             name="search" >
-
+            
             <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
@@ -85,9 +88,7 @@
             {% endif %}
         </div>
 
-        <div id="container-search-recommandations">
-            <div id="search-recommandations"></div>
-        </div>
+        
     </nav>
 
     <div>
