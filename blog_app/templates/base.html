@@ -66,9 +66,10 @@
         <div class="centered">
             <div class="links">
                 <li class="transition-btn" onclick="location.href='{% url "index" %}'">Home</li>
-                <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About us</li>
                 <li class="transition-btn" onclick="location.href='{% url "list_posts" %}'">Posts</li>
                 <li class="transition-btn" onclick="location.href='{% url "post" %}'">Write</li>
+                <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About</li>
+                <li class="transition-btn" onclick="location.href='{% url "contact_view" %}'">Contact us</li>
             </div>
             {% if user.is_authenticated %}
                 <div class="button-log-regis">

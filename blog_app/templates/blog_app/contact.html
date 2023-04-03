@@ -1,22 +1,28 @@
 <!-- blog/blog_app/templates/blog_app/contact.html -->
+{% extends 'base.html' %}
+
+{% load static %}
 
 <html>
 
 <head>
-    
+    {% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href={% static 'blog_app/contact.css' %}>
+    {% endblock stylesheet %}
 </head>
 
 
 <body>
-
-    <h1>Contact Page</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="send" id="send-btn">
-    </form>
-    
-
+    {% block index %}
+    <div id="contact-interface">
+        <h1>Contact Page</h1>
+        <form action="" method="POST" id="contact-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="send" id="send-btn">
+        </form>
+    </div>
+    {% endblock index %}
 </body>
 
 </html>
