@@ -46,9 +46,9 @@ class UserModels(AbstractUser):
     
 
 class PostManager(models.Manager):
-    def create_post(self, username, categorie, title, content, image):
+    def create_post(self, user_id, categorie, title, content, image):
         post = self.model(
-            username = username,
+            user_id = user_id,
             categorie = categorie,
             title = title,
             content = content,
@@ -66,7 +66,8 @@ class PostModels(models.Model): # structure d'un article de blog
         Organic_Cuisine = 'Organic Cuisine'
         Vegetarian_Food = 'Vegetarian Food'
        
-    username = models.CharField(max_length=30, blank=False) 
+    # username = models.CharField(max_length=30, blank=False)
+    user_id= models.ForeignKey(UserModels, on_delete=models.CASCADE)
     categorie = models.fields.CharField(choices=Categories.choices, max_length=15)
     date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=30, blank=False)
@@ -76,7 +77,6 @@ class PostModels(models.Model): # structure d'un article de blog
     image = models.ImageField(upload_to='posts_images/', blank=False, null=True)
     favoris = models.ManyToManyField(UserModels, blank=True, related_name='favoris')
     bookmark = models.ManyToManyField(UserModels, blank=True, related_name='bookmark')
-    testcontent = models.FileField(upload_to='posts_image/', blank=False)
     objects = PostManager()
     
     

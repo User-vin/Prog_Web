@@ -4,8 +4,13 @@
     {% csrf_token %}
     <ul id="list">
         {% for result in results|slice:":10" %}
-            <li class="result" onclick="location.href='{% url 'post_detail' pk=result.id username=result.username categorie=result.categorie %}'">
+            <li class="result" onclick="location.href='{% url 'post_detail' pk=result.id user_id=result.user_id categorie=result.categorie %}'">
                 {{ result.title }}
+            </li>
+        {% endfor %}
+        {% for user in users|slice:":10" %}
+            <li class="result">
+                {{ user.username }}
             </li>
         {% endfor %}
     </ul>

@@ -36,9 +36,21 @@ def index_view(request):
     second_post = most_preferred[1]
     posts = models.PostModels.objects.exclude(id__in=[first_post.id, second_post.id]).order_by('-id')[:3]
     posts2 = models.PostModels.objects.annotate(num_favoris=Count('bookmark')).exclude(id__in=[first_post.id, second_post.id]+[post.id for post in posts]).order_by('-num_favoris')[:3]
-    print("most_preferred: ",most_preferred)
-    print("posts: ",posts)
-    print("posts2: ",posts2)
+        
+    # if most_preferred:
+    #     first_post = most_preferred[0]
+    #     if len(most_preferred)>=2:
+    #         second_post = most_preferred[1]
+    #         posts = models.PostModels.objects.exclude(id__in=[first_post.id, second_post.id]).order_by('-id')[:3]
+    #         posts2 = models.PostModels.objects.annotate(num_favoris=Count('bookmark')).exclude(id__in=[first_post.id, second_post.id]+[post.id for post in posts]).order_by('-num_favoris')[:3]
+    #     else:
+    #         second_post = None
+    #         posts = None
+    #         posts2 = None  
+    # else:
+    #     first_post = None
+        
+        
     context = {
         'first_post': first_post,
         'second_post': second_post,
@@ -102,7 +114,8 @@ def register_view(request):
                 new_user = models.UserModels.objects.create_user(
                     username=form.cleaned_data['username'],
                     email=form.cleaned_data['email'],
-                    password=form.cleaned_data['password']
+                    password=form.cleaned_data['password'],
+                    description="",
                 )
                 new_user.save()
                 new_user.is_active = True
@@ -122,7 +135,7 @@ class logout_view(LogoutView):
 @login_required
 def account_view(request):
     user = request.user
-    posts_count = models.PostModels.objects.filter(username=user).count
+    posts_count = models.PostModels.objects.filter(user_id=user.id).count
     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
     fav_count = models.PostModels.objects.filter(favoris=user).count
     context = {
@@ -137,7 +150,7 @@ def account_view(request):
 def parameters_view(request):
     user = request.user
     form = forms.UserUpdateForm(instance=user)
-    posts_count = models.PostModels.objects.filter(username=user).count
+    posts_count = models.PostModels.objects.filter(user_id=user.id).count
     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
     fav_count = models.PostModels.objects.filter(favoris=user).count
     print("dans la méthode")
@@ -172,7 +185,8 @@ def post_view(request):
         form = forms.CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = models.PostModels(
-                username = request.user.username,
+                # username = request.user.username,
+                user_id=request.user,
                 categorie = form.cleaned_data['categorie'],
                 title = form.cleaned_data['title'],
                 image = form.cleaned_data['image'],
@@ -203,15 +217,12 @@ def list_posts(request):
 
 def add_remove_favori(request, id):
     print("id: ",id)
-    print("add remove")
     if request.user.is_authenticated:    
         if request.method == 'POST':
             post = models.PostModels.objects.get(id=id)
             if request.user in post.favoris.all():
                 post.favoris.remove(request.user)
-                print("supprimer")
             else:
-                print("ajouter")
                 post.favoris.add(request.user)
             return render( request, 'blog_app/favori_btn.html', {'post':post})
 
@@ -223,13 +234,11 @@ def add_remove_bookmark(request, id):
             post = models.PostModels.objects.get(id=id)
             if request.user in post.bookmark.all():
                 post.bookmark.remove(request.user)
-                print("supprimer")
             else:
-                print("ajouter")
                 post.bookmark.add(request.user)
             return render( request, 'blog_app/bookmark_btn.html', {'post':post})
 
-def post_detail(request, pk, username, categorie):
+def post_detail(request, pk, user_id, categorie):
     """Retrieves the PostModels object associated with the identifier.
 
     Args:
@@ -240,9 +249,9 @@ def post_detail(request, pk, username, categorie):
         _type_: HTTP response object that renders an HTML page template with the PostModels object.
     """
     post = get_object_or_404(models.PostModels, pk=pk)
-    print("username: ",post.username)
-    print("username: ",username)
-    by_username = models.PostModels.objects.filter(username=post.username).exclude(id__in=[post.id]).order_by('-id')[:2]
+    # print("username: ",post.username)
+    # print("username: ",username)  
+    by_username = models.PostModels.objects.filter(user_id=request.user.id).exclude(id__in=[post.id]).order_by('-id')[:2]
     by_categorie = models.PostModels.objects.filter(categorie=categorie).exclude(id__in=[post.id]+[post2.id for post2 in by_username]).order_by('-id')[:2]
     print("post_username: ",by_username)
     comments = models.CommentModels.objects.filter(post=post).order_by('-id')
@@ -302,7 +311,7 @@ def posts(request, filter_by, value):
             return redirect(reverse('login') + '?next=' + request.get_full_path())
     elif filter_by == 'myPosts':
         if request.user.is_authenticated:
-            post_list = models.PostModels.objects.filter(username=request.user).order_by('-id')
+            post_list = models.PostModels.objects.filter(user_id=request.user.id).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
         
@@ -401,13 +410,20 @@ def search_resutls(request):
         _type_: html with all objects 
     """
     # récupère la requete applée 'title/username'
-    query = request.GET.get('search')
-    if query:
+    search_text = request.GET.get('search')
+    if search_text:
         # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
         # | opératuer de django pour combiné les requetes
-        posts = models.PostModels.objects.filter(Q(title__contains=query) | Q(username__contains=query)).order_by('-id')
-        if posts:
-            return render(request, "blog_app/posts.html", {'posts': posts})     
+        print("query: ",search_text)
+        users = models.UserModels.objects.filter(Q(username__contains=search_text))
+        posts = models.PostModels.objects.filter(Q(title__contains=search_text)).order_by('-id')
+        print("post user id: ", posts)
+        context = {
+            'users': users,
+            'posts': posts,
+            }
+        if users or posts:
+            return render(request, "blog_app/posts.html", context)     
     return redirect(request.META.get('HTTP_REFERER', '/'))
     
 
@@ -417,11 +433,17 @@ def search_recommandations(request):
     # results = models.PostModels.objects.filter(Q(title__contains=search_text) | Q(username__contains=search_text)).order_by('-id')
     if search_text:
         results = models.PostModels.objects.filter(title__contains=search_text)
+        users = models.UserModels.objects.filter(username__contains=search_text)
     else:
         results = ""
+        users = ""
     context = {
         'results': results,
+        'users': users,
     }
+    print("users: ",users)
+    for user in users:
+        print("username: ",user)
     return render(request, 'blog_app/search_recommandations.html', context)
     
     

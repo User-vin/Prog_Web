@@ -42,10 +42,10 @@
                     
                     <div class="post-img" 
                         style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                        onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                     </div>
                     <div class="post-description"
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                        onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                         <a href="{% url 'posts_filter' filter_by='categorie' value=post.categorie %}" class="post-categorie colored-text">
                             {{ post.categorie }}
                         </a>
@@ -57,8 +57,8 @@
                             {{ post.date }}
                         </a>
                         <span>/</span>
-                        <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
-                            {{ post.username }}
+                        <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                            {{ post.user_id.username }}
                         </a>
                         
                         <div class="description-text">
@@ -70,7 +70,7 @@
                             {% include "blog_app/favori_btn.html" %}
                             {% include "blog_app/bookmark_btn.html" %}
                         </div>
-                        <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'"></div>
+                        <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'"></div>
                     </div>
                 </div>  
             {% endfor %}

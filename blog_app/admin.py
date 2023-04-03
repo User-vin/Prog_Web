@@ -14,9 +14,9 @@ class CustomUserAdmin(UserAdmin):
 
 
 class CustomPostAdmin(admin.ModelAdmin):
-    list_display = ('username', 'categorie', 'title', 'date')
-    list_filter = ('username', 'categorie', 'title', 'date')
-    search_fields = ('username', 'categorie', 'title', 'date')
+    list_display = ('user_id', 'categorie', 'title', 'date')
+    list_filter = ('user_id', 'categorie', 'title', 'date')
+    search_fields = ('user_id', 'categorie', 'title', 'date')
 
 class CustomCommentAdmin(admin.ModelAdmin):
     list_display = ('username', 'content', 'date', 'post', 'id')

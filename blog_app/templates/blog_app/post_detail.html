@@ -17,7 +17,7 @@
         
         <div class="main-content">
             <div class="content">
-                by {{ post.username }}
+                by {{ post.user_id.username }}
                 <br>
                 <div class="post-img" style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');">
                 </div>
@@ -38,28 +38,28 @@
         </div>
 
         <div class="more">
-            {{ post.username }}
+            {{ post.user_id.username }}
             <br>
             <p>follow</p>
             <p>send a message</p>
 
             <div class="more-posts">
-                more from {{ post.username }}
+                more from {{ post.user_id.username }}
                 <hr>
                 <div class="more-posts-grid">
                     {% for post in by_username|slice:":2" %}
                         <div class="post">
                             <div class="post-img" 
                                 style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
-                                onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                                onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                             </div>
                             <div class="post-description"
-                                onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                                <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
-                                    {{ post.username }}
+                                onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
+                                <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                                    {{ post.user_id.username }}
                                 </a>
                                 <div class="description-text"
-                                    onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                                    onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                     {{ post.content|safe }}
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 {% include "blog_app/favori_btn.html" %}
                                 {% include "blog_app/bookmark_btn.html" %}
                             </div>
-                            <div class="vide" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                            <div class="vide" onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                 
                             </div>
                         </div>      
@@ -84,14 +84,14 @@
                             <div class="post">
                                 <div class="post-img" 
                                     style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
-                                    onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                                    onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                 </div>
                             <div class="post-description">
-                                <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
-                                    {{ post.username }}
+                                <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                                    {{ post.user_id.username }}
                                 </a>
                                 <div class="description-text"
-                                    onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                                    onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                     {{ post.content|safe }}
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 {% include "blog_app/favori_btn.html" %}
                                 {% include "blog_app/bookmark_btn.html" %}
                             </div>
-                            <div class="vide" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+                            <div class="vide" onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                 
                             </div>
                         </div>

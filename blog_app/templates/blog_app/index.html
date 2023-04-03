@@ -43,144 +43,151 @@
             </div>
         </div>
     </section>
-
+    
     <section class="blog">
         <div class="blog-grid">
-            <div class="food1" style="background-image: url('{{ MEDIA_URL }}{{ first_post.image.url }}');">
-            </div>
-            <div class="description1">
-                <a href="{% url 'posts_filter' filter_by='categorie' value=first_post.categorie %}" class="post-categorie colored-text">
-                    {{ first_post.categorie }}
-                </a>
-                <h2 class="bold-title">{{ first_post.title }}</h2>
-                <div>
-                    <a href="{% url 'posts_filter' filter_by='date' value=first_post.date %}" class="date transition-btn">
-                        {{ first_post.date }}
-                    </a>
-                    <span>/</span>
-                    <a href="{% url 'posts_filter' filter_by='username' value=first_post.username %}" class="author transition-btn">
-                        {{ first_post.username }}
-                    </a>
+            {% if first_post %}
+                <div class="food1" style="background-image: url('{{ MEDIA_URL }}{{ first_post.image.url }}');">
                 </div>
-                <div class="description-text">
-                    {{ first_post.get_content_as_text|safe }}
-                </div>
-                <div class="icons boutons">
-                    {% include "blog_app/favori_btn.html" with post=first_post %}
-                    {% include "blog_app/bookmark_btn.html" with post=first_post %}
-                </div>
-                <a href="{% url 'post_detail' pk=first_post.id username=first_post.username categorie=first_post.categorie %}" class="read-more">
-                    Read More
-                </a>
-            </div>
-            <div class="food2" style="background-image: url('{{ MEDIA_URL }}{{ second_post.image.url }}');">
-            </div>
-            <div class="description2">
-                <a href="{% url 'posts_filter' filter_by='categorie' value=second_post.categorie %}" class="post-categorie colored-text">
-                    {{ second_post.categorie }}
-                </a>
-                <h2 class="bold-title">{{ second_post.title }}</h2>
-                <div>
-                    
-                    <h2 class="bold-title">{{ post.title }}</h2>
-                    <a href="{% url 'posts_filter' filter_by='date' value=second_post.date %}" class="date transition-btn">
-                        {{ second_post.date }}
+                <div class="description1">
+                    <a href="{% url 'posts_filter' filter_by='categorie' value=first_post.categorie %}" class="post-categorie colored-text">
+                        {{ first_post.categorie }}
                     </a>
-                    <span>/</span>
-                    <a href="{% url 'posts_filter' filter_by='username' value=second_post.username %}" class="author transition-btn">
-                        {{ second_post.username }}
+                    <h2 class="bold-title">{{ first_post.title }}</h2>
+                    <div>
+                        <a href="{% url 'posts_filter' filter_by='date' value=first_post.date %}" class="date transition-btn">
+                            {{ first_post.date }}
+                        </a>
+                        <span>/</span>
+                        <a href="{% url 'posts_filter' filter_by='username' value=first_post.user_id %}" class="author transition-btn">
+                            {{ first_post.user_id.username }}
+                        </a>
+                    </div>
+                    <div class="description-text">
+                        {{ first_post.get_content_as_text|safe }}
+                    </div>
+                    <div class="icons boutons">
+                        {% include "blog_app/favori_btn.html" with post=first_post %}
+                        {% include "blog_app/bookmark_btn.html" with post=first_post %}
+                    </div>
+                    <a href="{% url 'post_detail' pk=first_post.id user_id=first_post.user_id categorie=first_post.categorie %}" class="read-more">
+                        Read More
                     </a>
                 </div>
-                <div class="description-text">
-                    {{ second_post.content|safe }}
+            {% endif %}
+            {% if second_post %}
+                <div class="food2" style="background-image: url('{{ MEDIA_URL }}{{ second_post.image.url }}');">
                 </div>
-                <div class="icons boutons">
-                    {% include "blog_app/favori_btn.html" with post=second_post %}
-                    {% include "blog_app/bookmark_btn.html" with post=second_post %}
+                <div class="description2">
+                    <a href="{% url 'posts_filter' filter_by='categorie' value=second_post.categorie %}" class="post-categorie colored-text">
+                        {{ second_post.categorie }}
+                    </a>
+                    <h2 class="bold-title">{{ second_post.title }}</h2>
+                    <div>
+                        
+                        <h2 class="bold-title">{{ post.title }}</h2>
+                        <a href="{% url 'posts_filter' filter_by='date' value=second_post.date %}" class="date transition-btn">
+                            {{ second_post.date }}
+                        </a>
+                        <span>/</span>
+                        <a href="{% url 'posts_filter' filter_by='username' value=second_post.user_id %}" class="author transition-btn">
+                            {{ second_post.user_id.username }}
+                        </a>
+                    </div>
+                    <div class="description-text">
+                        {{ second_post.content|safe }}
+                    </div>
+                    <div class="icons boutons">
+                        {% include "blog_app/favori_btn.html" with post=second_post %}
+                        {% include "blog_app/bookmark_btn.html" with post=second_post %}
+                    </div>
+                    <a href="{% url 'post_detail' pk=second_post.id user_id=second_post.user_id categorie=second_post.categorie %}" class="read-more">
+                        Read More
+                    </a>
                 </div>
-                <a href="{% url 'post_detail' pk=second_post.id username=second_post.username categorie=second_post.categorie %}" class="read-more">
-                    Read More
-                </a>
-            </div>
+            {% endif %}
          </div>
     </section>
 
     <section class="more">
-        <div class="more-grid-left">
-            {% for post in posts|slice:":3" %}
-                <div class="post">
-                    
-                    <div class="post-img" 
-                        style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                    </div>
-                    <div class="post-description" 
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
+        {% if posts %}
+            <div class="more-grid-left">
+                {% for post in posts|slice:":3" %}
+                    <div class="post">
                         
-                        <a href="{% url 'posts_filter' filter_by='categorie' value=post.categorie %}" class="post-categorie colored-text">
-                            {{ post.categorie }}
-                        </a>
-                        <h2 class="bold-title">{{ post.title }}</h2>
-                        <a href="{% url 'posts_filter' filter_by='date' value=post.date %}" class="date transition-btn">
-                            {{ post.date }}
-                        </a>
-                        <span>/</span>
-                        <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
-                            {{ post.username }}
-                        </a>
-                        <div class="description-text">
-                            {{ post.content|safe}}
+                        <div class="post-img" 
+                            style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
+                            onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                         </div>
-                        
-                    </div>
-                    <div class="last-row">
-                        <div class="zone-icons icons boutons">
-                            {% include "blog_app/favori_btn.html" %}
-                            {% include "blog_app/bookmark_btn.html" %}
+                        <div class="post-description" 
+                            onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
+                            
+                            <a href="{% url 'posts_filter' filter_by='categorie' value=post.categorie %}" class="post-categorie colored-text">
+                                {{ post.categorie }}
+                            </a>
+                            <h2 class="bold-title">{{ post.title }}</h2>
+                            <a href="{% url 'posts_filter' filter_by='date' value=post.date %}" class="date transition-btn">
+                                {{ post.date }}
+                            </a>
+                            <span>/</span>
+                            <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                                {{ post.user_id.username }}
+                            </a>
+                            <div class="description-text">
+                                {{ post.content|safe}}
+                            </div>
+                            
                         </div>
-                        <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'"></div>
-                    </div>
+                        <div class="last-row">
+                            <div class="zone-icons icons boutons">
+                                {% include "blog_app/favori_btn.html" %}
+                                {% include "blog_app/bookmark_btn.html" %}
+                            </div>
+                            <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'"></div>
+                        </div>
 
-                </div>                 
-            {% endfor %}
-        </div>
-
-        <div class="more-grid-right">
-            <div class="more1">
-
+                    </div>                 
+                {% endfor %}
             </div>
+        {% endif %}
+        {% if posts2 %}
+            <div class="more-grid-right">
+                <div class="more1">
 
-            {% for post in posts2|slice:":3" %}
-                <div class="post" >
-                    
-                    <div class="post-img" 
-                        style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                    
-                    </div>
-                    <div class="post-description" 
-                        onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'">
-                        <h2 class="bold-title">{{ post.title|linebreaksbr|truncatechars:21 }}</h2>
-                        <hr>
-                        <a href="{% url 'posts_filter' filter_by='date' value=post.date %}" class="date transition-btn">
-                            {{ post.date }}
-                        </a>
-                        <span>/</span>
-                        <a href="{% url 'posts_filter' filter_by='username' value=post.username %}" class="author transition-btn">
-                            {{ post.username }}
-                        </a>
-                    </div>
-                    <div class="last-row">
-                        <div class="zone-icons icons boutons">
-                            {% include "blog_app/favori_btn.html" %}
-                            {% include "blog_app/bookmark_btn.html" %}
+                </div>
+
+                {% for post in posts2|slice:":3" %}
+                    <div class="post" >
+                        
+                        <div class="post-img" 
+                            style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
+                            onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
+                        
                         </div>
-                        <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id username=post.username categorie=post.categorie %}'"></div>
-                    </div>
-                </div>  
-                          
-            {% endfor %}
-        </div>
+                        <div class="post-description" 
+                            onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
+                            <h2 class="bold-title">{{ post.title|linebreaksbr|truncatechars:21 }}</h2>
+                            <hr>
+                            <a href="{% url 'posts_filter' filter_by='date' value=post.date %}" class="date transition-btn">
+                                {{ post.date }}
+                            </a>
+                            <span>/</span>
+                            <a href="{% url 'posts_filter' filter_by='username' value=post.user_id %}" class="author transition-btn">
+                                {{ post.user_id.username }}
+                            </a>
+                        </div>
+                        <div class="last-row">
+                            <div class="zone-icons icons boutons">
+                                {% include "blog_app/favori_btn.html" %}
+                                {% include "blog_app/bookmark_btn.html" %}
+                            </div>
+                            <div class="empty-col" onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'"></div>
+                        </div>
+                    </div>  
+                            
+                {% endfor %}
+            </div>
+        {% endif %}
     </section>
 
     {% endblock index %}
