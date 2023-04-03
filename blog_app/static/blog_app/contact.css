@@ -1,0 +1,25 @@
+
+#contact-interface{
+    margin: 30px;
+}
+
+#contact-form p{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+#contact-form input[type="submit"]{
+    color: white;
+    background-color: #729D39;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease-in-out;
+    width: 7%;
+}
+
+#contact-form input[type="submit"]:hover{
+    background-color: #81b32b;
+}
