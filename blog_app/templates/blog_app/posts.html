@@ -35,7 +35,10 @@
     {% endif %}
 
     <!-- posts -->
-    <section class="display-posts">
+    <section class="display-posts" 
+        hx-get="/posts/?page=2"
+        hx-trigger="revealed"
+        hx-swap="afterend">
         <div class="posts">
             {% for post in posts %}
                 <div class="post" >

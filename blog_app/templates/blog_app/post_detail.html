@@ -17,18 +17,21 @@
         
         <div class="main-content">
             <div class="content">
-                by {{ post.user_id.username }}
+                
+                <div class="banner">
+                    <h1>{{ post.title }}</h1>
+                    <div class="post-info">
+                        <span>by {{ post.user_id.username }}</span>
+                        <span class="date">{{ post.date }}</span>
+                        <span class="category">{{ post.categorie }}</span>
+                    </div>
+                  </div>
                 <br>
                 <div class="post-img" style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');">
                 </div>
-                <div class="title">{{ post.title }}</div>
-                
+                <br>
+                <br>
                 <div class="content">{{ post.content|safe }}</div>
-
-                <div class="categorie">{{ post.categorie }}</div>
-                
-                <div class="date">{{ post.date }}</div>
-                
                 <div class="icons">
                     {% include "blog_app/favori_btn.html" %}
                     {% include "blog_app/bookmark_btn.html" %}
@@ -38,11 +41,11 @@
         </div>
 
         <div class="more">
-            {{ post.user_id.username }}
             <br>
-            <p>follow</p>
-            <p>send a message</p>
-
+            <a class="transition-btn" href="{% url 'account' user_id=post.user_id.id %}">see {{ post.user_id.username }}'s Profil</a>
+            <br>
+            <br>
+            <br>
             <div class="more-posts">
                 more from {{ post.user_id.username }}
                 <hr>
@@ -60,7 +63,7 @@
                                 </a>
                                 <div class="description-text"
                                     onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
-                                    {{ post.content|safe }}
+                                    {{ post.title|safe }}
                                 </div>
                             </div>
                             <div class="icons boutons">
@@ -92,7 +95,7 @@
                                 </a>
                                 <div class="description-text"
                                     onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
-                                    {{ post.content|safe }}
+                                    {{ post.title|safe }}
                                 </div>
                             </div>
                             <div class="icons boutons">
@@ -128,18 +131,6 @@
         console.log("height: ",height)
         console.log("contents: ",contents.clientHeight)
         contents.style.height = height + "px";
-
-        // window.onbeforeunload = function() {
-        //     localStorage.setItem('scrollPos', window.pageYOffset);
-        // }
-
-        // window.onload = function() {
-        //     var scrollPos = localStorage.getItem('scrollPos');
-        //     if (scrollPos) {
-        //         window.scrollTo(0, scrollPos);
-        //         localStorage.removeItem('scrollPos');
-        //     }
-        // }
 
     </script>
     {% endblock script %}

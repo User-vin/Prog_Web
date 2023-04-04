@@ -36,21 +36,7 @@ def index_view(request):
     second_post = most_preferred[1]
     posts = models.PostModels.objects.exclude(id__in=[first_post.id, second_post.id]).order_by('-id')[:3]
     posts2 = models.PostModels.objects.annotate(num_favoris=Count('bookmark')).exclude(id__in=[first_post.id, second_post.id]+[post.id for post in posts]).order_by('-num_favoris')[:3]
-        
-    # if most_preferred:
-    #     first_post = most_preferred[0]
-    #     if len(most_preferred)>=2:
-    #         second_post = most_preferred[1]
-    #         posts = models.PostModels.objects.exclude(id__in=[first_post.id, second_post.id]).order_by('-id')[:3]
-    #         posts2 = models.PostModels.objects.annotate(num_favoris=Count('bookmark')).exclude(id__in=[first_post.id, second_post.id]+[post.id for post in posts]).order_by('-num_favoris')[:3]
-    #     else:
-    #         second_post = None
-    #         posts = None
-    #         posts2 = None  
-    # else:
-    #     first_post = None
-        
-        
+    
     context = {
         'first_post': first_post,
         'second_post': second_post,
@@ -133,8 +119,14 @@ class logout_view(LogoutView):
     next_page = '/'
     
 @login_required
-def account_view(request):
+def account_view(request, user_id):
     user = request.user
+    print("__________account_view____________")
+    print("user_id: ",user_id)
+    print("user_id: ",get_object_or_404(models.UserModels, id=user_id))
+    print("user_id: ",user)
+    if user.id != user_id:
+        user = get_object_or_404(models.UserModels, id=user_id)
     posts_count = models.PostModels.objects.filter(user_id=user.id).count
     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
     fav_count = models.PostModels.objects.filter(favoris=user).count
@@ -145,6 +137,21 @@ def account_view(request):
         'fav_count': fav_count,
     }
     return render(request, "blog_app/sidebar/account.html", context)
+
+# @login_required
+# def account_view(request):
+#     user = request.user
+#     posts_count = models.PostModels.objects.filter(user_id=user.id).count
+#     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
+#     fav_count = models.PostModels.objects.filter(favoris=user).count
+#     context = {
+#         'user': user,
+#         'posts_count': posts_count,
+#         'bookmarked_count': bookmarked_count,
+#         'fav_count': fav_count,
+#     }
+#     return render(request, "blog_app/sidebar/account.html", context)
+
 
 @login_required
 def parameters_view(request):
@@ -161,7 +168,7 @@ def parameters_view(request):
         if form.is_valid():
             form.save()
             print("----------------------------")
-            return redirect('account')
+            return redirect('account', user_id=user.id)
     print("azeazeza")
     context = {
         'form': form,
@@ -208,7 +215,7 @@ def list_posts(request):
     Returns:
         _type_: HTTP response object that renders an HTML page template with all the posts.
     """
-    p = Paginator(models.PostModels.objects.all().order_by('-id'), 8)
+    p = Paginator(models.PostModels.objects.all().order_by('-id'), 5    )
     # Récupére le numéro de page à partir des paramètres GET
     page = request.GET.get('page')
     # Récupére les objets Post de la page courante

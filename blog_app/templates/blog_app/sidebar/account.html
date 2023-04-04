@@ -14,10 +14,12 @@
                 <p>Number of bookmarks: {{ bookmarked_count }}</p>
                 <p>Number of favorites: {{ fav_count }}</p>
                 <br>
+                {% if request.user == user %}
                 <a class="modify-apply-btn" 
                     href="{% url 'parameters' %}">
                     Modify
                 </a>
+                {% endif %}
             </div>
         </div>
         <div class="column column2">

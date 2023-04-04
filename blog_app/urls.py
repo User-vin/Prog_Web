@@ -35,7 +35,7 @@ urlpatterns = [
     path('search-recommendations/', views.search_recommandations, name="search-recommandations"),
 
     # sidebar pages
-    path('account/', views.account_view, name="account"),
+    path('account/<user_id>/', views.account_view, name="account"),
     path('parameters/', views.parameters_view, name="parameters"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
