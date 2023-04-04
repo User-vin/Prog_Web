@@ -14,29 +14,35 @@
 <body>
 
     {% block index %}
-    {% include 'top_page.html' %}
-    {% include 'nav.html' %}
-    {% if request.resolver_match.url_name == 'list_posts' %}
-        <h1>Tous les articles</h1>
-    {% elif request.resolver_match.url_name == 'posts_filter' %}
-        {% if filter_by == 'username' %}
-            <h1>Articles de {{ username }}</h1>
-        {% elif filter_by == 'date' %}
-            <h1>Articles du {{ date }}</h1>
-        {% elif filter_by == 'categorie' %}
-            <h1>Articles de la catégorie {{ categorie }}</h1>
-        {% elif filter_by == 'bookmark' %}
-            <h1>Articles bookmarked</h1>
-            {% if message %}
-                {{ message }}
+    {% if page_number == 2 %}
+        {% include 'top_page.html' %}
+        {% include 'nav.html' %}
+        {% if request.resolver_match.url_name == 'list_posts' %}
+            <h1>Tous les articles</h1>
+        {% elif request.resolver_match.url_name == 'posts_filter' %}
+            {% if filter_by == 'username' %}
+                <h1>Articles de {{ username }}</h1>
+            {% elif filter_by == 'date' %}
+                <h1>Articles du {{ date }}</h1>
+            {% elif filter_by == 'categorie' %}
+                <h1>Articles de la catégorie {{ categorie }}</h1>
+            {% elif filter_by == 'bookmark' %}
+                <h1>Articles bookmarked</h1>
+                {% if message %}
+                    {{ message }}
+                {% endif %}
             {% endif %}
+        {% else %}
+            <h1>Blog</h1>
         {% endif %}
-    {% else %}
-        <h1>Blog</h1>
     {% endif %}
-
+    {{ page_number }}
     <!-- posts -->
-    <section class="display-posts">
+    
+    <section class="display-posts"
+        hx-get="/posts/{{ filter_by }}/{{ value }}/?page={{ page_number }}&first=False&current_page={{ page_number }}"
+        hx-trigger="revealed"
+        hx-swap="afterend">
         <div class="posts">
             {% for post in posts %}
                 <div class="post" >
@@ -78,7 +84,8 @@
         </div>
         
     </section>
-    
+
+
     <!-- Inf -->
 
     {{ posts }}

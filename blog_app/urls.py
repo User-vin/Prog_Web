@@ -14,7 +14,7 @@ urlpatterns = [
 
     path('register/',views.register_view, name="register"),
     path('post/',views.post_view , name="post"),
-    path('posts/',views.list_posts, name="list_posts"),
+    # path('posts/',views.list_posts, name="list_posts"),
     
     #-----
     

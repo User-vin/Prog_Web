@@ -297,6 +297,32 @@ def posts(request, filter_by, value):
     Returns:
         _type_: _description_
     """
+    print("")
+    print("")
+    print("")
+    print("")
+    print("------------------------------------------------------")
+    first = request.GET.get('first', "True")
+    print("first: ",first)
+    page_number = int(request.GET.get('current_page',2))
+    # if first == "False":
+    #     if (current_page < 2 or current_page != 2) :
+    #         current_page = 2
+    #     else: 
+    #         current_page += 1
+    # else:
+    # print("page_number: ",request.GET.get('current_page'))
+    if first == "False":
+        print("bonjour: ", type(page_number))
+        page_number+=1
+    # if first == "True":
+    #     print("je suis la")
+    #     page_number = 1
+    # if first == "False":
+    #     page_number += 1
+        
+    # print("current_page: ",current_page)
+    print("page_number: ",page_number)
     print("------------------------------------------------------")
     print("value: ",value)
     print("type: ",type(value))
@@ -305,6 +331,8 @@ def posts(request, filter_by, value):
     print("id: ",request.user.id)
     if filter_by == 'username':
         post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
+    elif filter_by == 'all':
+        post_list = models.PostModels.objects.all().order_by('-id')
     elif filter_by == 'date':
         post_list = models.PostModels.objects.filter(date=value).order_by('-date')
     elif filter_by == 'categorie':
@@ -324,12 +352,22 @@ def posts(request, filter_by, value):
             post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
+    else:
+        post_list = ""
         
-    p = Paginator(post_list, 10)
+    p = Paginator(post_list, 3)
     page = request.GET.get('page')
+    # if first == "True":
+    #     # page_number = 1
+        
+        
+    # else:
+    #     page += 1
+    
     posts = p.get_page(page)
     context = {'posts': posts, 'filter_by': filter_by, 'value': value}
-
+    context['page'] = page
+    context['page_number'] = page_number
     if not posts:
         context['message'] = "Empty for now, come back later"
     else:
@@ -344,6 +382,8 @@ def posts(request, filter_by, value):
     print("------------------------------------------------------")
     print("value: ",value)
     print("type: ",type(value))
+    print("page: ",page)
+    print("nombre de page: ",)
     # print("value.username: ",value.username)
     # print("type: ",type(value.username))
     print("id: ",request.user.id)
