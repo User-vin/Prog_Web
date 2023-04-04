@@ -1,5 +1,5 @@
 <!-- blog/blog_app/tempaltes/blog_app/post.html -->
-{% extends 'base_less.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
@@ -11,6 +11,7 @@
 </head>
 <body>
     {% block index %}
+    {% include 'nav.html' %}
         <div class="post-page">
             <h2>Créez votre post</h2>
             <form enctype="multipart/form-data" action="" method="post">

@@ -2,6 +2,7 @@
 
 {% extends 'base.html' %}
 
+
 <head>
     {% load static %}
     {% block stylesheet %}
@@ -9,8 +10,9 @@
     {% endblock stylesheet %}
 </head>
 <body>
-
     {% block index %}
+    {% include 'top_page.html' %}
+    {% include 'nav.html' %}
     <section class="categories">
         <div class="type-food1" onclick="location.href='{% url 'posts_filter' filter_by='categorie' value='Healthy Food' %}'">
             <div class="white-rectangle">
@@ -189,7 +191,8 @@
             </div>
         {% endif %}
     </section>
-
-    {% endblock index %}
+    {% include 'footer.html' %}
+    {% endblock %}
 
 </body>
+

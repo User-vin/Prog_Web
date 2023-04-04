@@ -9,6 +9,8 @@
 </head>
 <body>
     {% block index %}
+    {% include 'top_page.html' %}
+    {% include 'nav.html' %}
     <div id="first-div">
         <h2>Un Hobby et une passion...</h2>
         <p>
@@ -29,5 +31,6 @@
             Contactez-nous
         </a>
     </div>
+    {% include 'footer.html' %}
     {% endblock index %}
 </body>

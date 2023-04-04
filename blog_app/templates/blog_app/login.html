@@ -9,6 +9,7 @@
 </head>
 <body>
     {% block index %}
+    {% include 'nav.html' %}
     <div class="login-page">
         <div class="interface">
             <h2>Login</h2>
@@ -28,6 +29,7 @@
             </a>
         </div>
     </div>
+    {% include 'footer.html' %}
     {% endblock index %}
 </body>
 

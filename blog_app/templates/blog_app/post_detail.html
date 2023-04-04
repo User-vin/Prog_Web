@@ -11,7 +11,8 @@
 
 <body>
     {% block index %}
-    
+    {% include 'top_page.html' %}
+    {% include 'nav.html' %}
     <div class="contents">
         
         
@@ -114,7 +115,7 @@
         </div>
     </div>
         
-
+    {% include 'footer.html' %}
     {% endblock index %}
 
     {% block script %}

@@ -14,7 +14,8 @@
 <body>
 
     {% block index %}
-
+    {% include 'top_page.html' %}
+    {% include 'nav.html' %}
     {% if request.resolver_match.url_name == 'list_posts' %}
         <h1>Tous les articles</h1>
     {% elif request.resolver_match.url_name == 'posts_filter' %}
@@ -35,10 +36,7 @@
     {% endif %}
 
     <!-- posts -->
-    <section class="display-posts" 
-        hx-get="/posts/?page=2"
-        hx-trigger="revealed"
-        hx-swap="afterend">
+    <section class="display-posts">
         <div class="posts">
             {% for post in posts %}
                 <div class="post" >
@@ -111,7 +109,7 @@
         <a href="?page={{ posts.next_page_number }}">Next</a>
         <a href="?page={{ posts.paginator.num_pages }}">Last &raquo</a>
     {% endif %}
-
+    {% include 'footer.html' %}
     {% endblock index %}
 
 </body>
