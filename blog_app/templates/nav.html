@@ -1,7 +1,8 @@
-
+<!-- blog_app/templates/nav.html -->
 
 
 <nav class="nav">
+    <!-- onclick =, ce qui se passe si click sur l'élément -->
     <div class="menu" onclick="openSide()">
         <div id="sidebar">
             <ul>
@@ -16,11 +17,18 @@
             <div id="search-recommandations"></div>
         </div>
     </div>
-    
+    <!-- spécifiant l'URL de la vue des résultats de recherche à laquelle les données du formulaire seront soumises -->
     <form action="{% url 'search-results' %}" 
         method="GET" 
         class="search" >
-        {% csrf_token %}       
+        <!-- template tag pour des raisons de sécuritées -->
+        {% csrf_token %}    
+        <!-- 
+            utilisé pour un rafraîchissement dynamique 
+            hx-post: spécifie la méthode HTTP à utiliser pour la requête, par exemple GET ou POST.
+            hx-target: spécifier la cible d'un protocole de transfert hypertexte
+            hx-trigger: utilisé pour définir le type d'événement qui déclenchera une requête AJAX lorsqu'un élément est cliqué.
+         -->
         <input type="text" 
         hx-post="{% url 'search-recommandations' %}"
         hx-target="#search-recommandations"
@@ -42,13 +50,16 @@
             <li class="transition-btn" onclick="location.href='{% url "about_us" %}'">About</li>
             <li class="transition-btn" onclick="location.href='{% url "contact_view" %}'">Contact us</li>
         </div>
+        <!-- si lu'utilisateur est connecté -->
         {% if user.is_authenticated %}
             <div class="button-log-regis">
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
+                <!-- type="submit": spécifier que le bouton est un bouton de soumission -->
                 <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
             </form>       
         {% else %}
+            <!-- ?next={{request.path}}, valeur donnée à la variable next récuppèrable dans la vue -->
             <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
                 Login/Register
             </button>

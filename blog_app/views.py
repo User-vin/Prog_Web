@@ -1,4 +1,4 @@
-# blog/blog_app/views.py
+# blog_app/views.py
 
 # les données sont affichées grace aux views
 # pour afficher des données il faut faire appelle à un model 
@@ -28,8 +28,8 @@ def index_view(request):
     Returns:
         _type_: HTTP response object that renders an HTML page template specified by the string "blog_app/index.html" with the view context.
     """
-    # Récupére tous les objets Post. Récupérer les deux derniers objets Post
-    # latest_posts = models.PostModels.objects.all().order_by('-date')[:2][::-1]
+    # Parmis les objets PostModels triés par le nombre de favoris par ordre décroissant. 
+    # Récupérer les deux derniers objets Post
     most_preferred = models.PostModels.objects.annotate(num_favoris=Count('favoris')).order_by('-num_favoris')[:2]   
     
     first_post = most_preferred[0]
@@ -43,7 +43,8 @@ def index_view(request):
         'posts': posts,
         'posts2': posts2,
     }
-    # Rendre le template avec les deux derniers objets Post
+    # Rendre le template blog_app/index.html
+    # context contient les variable utilisable dans le html
     return render(request, 'blog_app/index.html', context)
     
     
@@ -57,29 +58,26 @@ def login_view(request):
         _type_: HTTP response object that renders an HTML page template, root if the user is logged in
         else, the same page template with the view context.
     """
-    if request.method == "POST":
-        username = request.POST.get('username')
+    if request.method == "POST": # vérifie si c'est une requete POST 
+        username = request.POST.get('username') # extrait de la requete POST la valeur associée a username
         password = request.POST.get('password')
+        # si les paramètres fournis correspondent à un utilisateur, il est alors connecté
         user = authenticate(request, username=username, password=password)
-        print(user)
-        print(authenticate(request, username=username))
         if user is not None:
             # utilisateur trouvé dans la base de donnée
             # connectez l'utilisateur
             login(request, user)
             if request.user.is_authenticated:
                 redirect_to = request.GET.get('next', '')
-                print("redirect_to: ",redirect_to)
-                print("request.get_full_path: ",request.get_full_path)
                 return HttpResponseRedirect(redirect_to) 
         else:
-            form = forms.LoginForm()
+            form = forms.LoginForm() # crée une instance de LoginForm()
             # utilisateur non trouvé dans la base de données
             error_message = "username ou mot de passe invalide."
-            return render(request, 'blog_app/login.html', {'error_message': error_message, 'form':form})
+            return render(request, 'blog_app/log_regis/login.html', {'error_message': error_message, 'form':form})
     else:
         form = forms.LoginForm()
-        return render(request, 'blog_app/login.html', {"form": form})
+        return render(request, 'blog_app/log_regis/login.html', {"form": form})
 
 
 def register_view(request):
@@ -94,17 +92,21 @@ def register_view(request):
         else, the same page template with the view context.
     """
     if request.method == "POST":
-        form = forms.RegisterForm(request.POST)
+        # définie une instance de RegisterForm initialisé avec les informations de request.POST
+        form = forms.RegisterForm(request.POST) 
         if form.is_valid():
             try:
                 new_user = models.UserModels.objects.create_user(
-                    username=form.cleaned_data['username'],
+                    # récuppère la valeur du champ username
+                    # champ rempli par l'utilisateur
+                    # néttoie la valeur, pour etre sur que la valeur est valide
+                    username=form.cleaned_data['username'], 
                     email=form.cleaned_data['email'],
                     password=form.cleaned_data['password'],
                     description="",
                 )
-                new_user.save()
-                new_user.is_active = True
+                new_user.save() # enregistre l'utilisateur
+                new_user.is_active = True # connecte l'utilisateur
                 user = authenticate(request, username=new_user.username, password=form.cleaned_data["password"])
                 login(request, user)
                 return redirect('/')
@@ -112,7 +114,7 @@ def register_view(request):
                 form.add_error('username', 'Le nom d\'utilisateur existe déjà.')
     else:
         form = forms.RegisterForm()
-    return render(request, "blog_app/register.html", {"form": form})
+    return render(request, "blog_app/log_regis/register.html", {"form": form})
     
 
 class logout_view(LogoutView):
@@ -120,12 +122,20 @@ class logout_view(LogoutView):
     
 @login_required
 def account_view(request, user_id):
-    user = request.user
-    print("__________account_view____________")
-    print("user_id: ",user_id)
-    print("user_id: ",get_object_or_404(models.UserModels, id=user_id))
-    print("user_id: ",user)
+    """This view is used to display the user's account information such as the number of posts, 
+    bookmarks, and favorites that the user has created. 
+
+    Args:
+        request (_type_): _description_
+        user_id (int): user id
+
+    Returns:
+        _type_: _description_
+    """
+    user = request.user # permet d'obtenir l'instance de user
     if user.id != user_id:
+        # récuppère un objet UserModels en fonction de user_id 
+        # ou retourne une erreur 404
         user = get_object_or_404(models.UserModels, id=user_id)
     posts_count = models.PostModels.objects.filter(user_id=user.id).count
     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
@@ -141,21 +151,26 @@ def account_view(request, user_id):
 
 @login_required
 def parameters_view(request):
+    """This view is used to display the user's profile information and allows the user to update it. 
+        It also displays the number of posts, bookmarks, and favorites that the user has created. 
+        This view is accessible only to authenticated users 
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     user = request.user
     form = forms.UserUpdateForm(instance=user)
     posts_count = models.PostModels.objects.filter(user_id=user.id).count
     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
     fav_count = models.PostModels.objects.filter(favoris=user).count
-    print("dans la méthode")
-    print("request.method: ",request.method)
     if request.method == 'POST':
-        print("----------------------------")
         form = forms.UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            print("----------------------------")
             return redirect('account', user_id=user.id)
-    print("azeazeza")
     context = {
         'form': form,
         'posts_count': posts_count,
@@ -178,7 +193,6 @@ def post_view(request):
         form = forms.CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = models.PostModels(
-                # username = request.user.username,
                 user_id=request.user,
                 categorie = form.cleaned_data['categorie'],
                 title = form.cleaned_data['title'],
@@ -189,11 +203,10 @@ def post_view(request):
             return redirect('/')
     else:
         form = forms.CreatePostForm()
-    return render(request, "blog_app/post.html", {'form': form})
+    return render(request, "blog_app/post/post.html", {'form': form})
 
 
 def add_remove_favori(request, id):
-    print("id: ",id)
     if request.user.is_authenticated:    
         if request.method == 'POST':
             post = models.PostModels.objects.get(id=id)
@@ -205,7 +218,6 @@ def add_remove_favori(request, id):
 
 
 def add_remove_bookmark(request, id):
-    print("id: ",id)
     if request.user.is_authenticated:   
         if request.method == 'POST':
             post = models.PostModels.objects.get(id=id)
@@ -228,7 +240,6 @@ def post_detail(request, pk, user_id, categorie):
     post = get_object_or_404(models.PostModels, pk=pk)
     by_username = models.PostModels.objects.filter(user_id=request.user.id).exclude(id__in=[post.id]).order_by('-id')[:2]
     by_categorie = models.PostModels.objects.filter(categorie=categorie).exclude(id__in=[post.id]+[post2.id for post2 in by_username]).order_by('-id')[:2]
-    print("post_username: ",by_username)
     comments = models.CommentModels.objects.filter(post=post).order_by('-id')
     if request.user.is_authenticated:
         form = forms.CreateCommentForm(request.POST)
@@ -250,15 +261,12 @@ def post_detail(request, pk, user_id, categorie):
         'comments': comments,
         'form': form,
     }
-    print(f"----by_categorie: {by_categorie}")
-    print(f"----by_username: {by_username}")
     # ici, la variable 'post' contient l'objet Post correspondant à l'id 'pk'
-    return render(request, 'blog_app/post_detail.html', context)
-
+    return render(request, 'blog_app/post/post_detail.html', context)
 
 
 def posts(request, filter_by, value):
-    """summary
+    """responsible for rendering the list of all posts according to the filter specified in the URL
     Args:
         request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
         filter_by (_type_): La variable dynamique dans l'URL qui détermine le filtre de tri à utiliser (par exemple, "username", "date" ou "categorie").
@@ -267,38 +275,10 @@ def posts(request, filter_by, value):
     Returns:
         _type_: _description_
     """
-    print("")
-    print("")
-    print("")
-    print("")
-    print("------------------------------------------------------")
-    first = request.GET.get('first', "True")
-    print("first: ",first)
+    first = request.GET.get('first', "True") # récuppère la valeur de first sinon donne la valeur True
     page_number = int(request.GET.get('current_page',2))
-    # if first == "False":
-    #     if (current_page < 2 or current_page != 2) :
-    #         current_page = 2
-    #     else: 
-    #         current_page += 1
-    # else:
-    # print("page_number: ",request.GET.get('current_page'))
     if first == "False":
-        print("bonjour: ", type(page_number))
         page_number+=1
-    # if first == "True":
-    #     print("je suis la")
-    #     page_number = 1
-    # if first == "False":
-    #     page_number += 1
-        
-    # print("current_page: ",current_page)
-    print("page_number: ",page_number)
-    print("------------------------------------------------------")
-    print("value: ",value)
-    print("type: ",type(value))
-    # print("value.username: ",value.id)
-    # print("type: ",type(value.id))
-    print("id: ",request.user.id)
     if filter_by == 'username':
         post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
     elif filter_by == 'all':
@@ -325,9 +305,9 @@ def posts(request, filter_by, value):
     else:
         post_list = ""
         
-    p = Paginator(post_list, 4)
-    page = request.GET.get('page')
-    posts = p.get_page(page)
+    p = Paginator(post_list, 4) # crée une pagination avec 4 éléments de post_list par page
+    page = request.GET.get('page') # récuppère le numéro la page actuelle 
+    posts = p.get_page(page) # récuppère la page actuelle
     context = {
         'posts': posts, 
         'filter_by': filter_by, 
@@ -346,79 +326,46 @@ def posts(request, filter_by, value):
         context['date'] = value
     elif filter_by == 'categorie':
         context['categorie'] = value
-    print("page shown: ",page)
-    print("------------------------------------------------------")
-    print("value: ",value)
-    print("type: ",type(value))
-    print("page: ",page)
-    print("nombre de page: ",)
-    # print("value.username: ",value.username)
-    # print("type: ",type(value.username))
-    print("id: ",request.user.id)
-    # print("filter_by: ",filter_by)
-    # print("value: ",value)
-    # print("message: ",context['message'])
-    return render(request, 'blog_app/posts.html', context)
+    return render(request, 'blog_app/post/posts.html', context)
 
 def comments_area(request, pk):
-    print("")
-    print("-----esapce commentaires-----")
-    print("")
+    """ handles the creation and retrieval of comments for a specific blog post
+
+    Args:
+        request (_type_): _description_
+        pk (_type_): primary key, id combinaison unique 
+
+    Returns:
+        _type_: _description_
+    """
     post = get_object_or_404(models.PostModels, pk=pk)
-    print(post.id)
-    print("request: ", request)
-    # comments = models.CommentModels.objects.filter(post=post).order_by('-id')
-    # print("comments: ",comments)
-    print("request.POST: ",request.POST)
-    print("request.method: ",request.method)
-    print("request.GET: ",request.GET)
-    # print("nombre: ",len(comments))
     if request.user.is_authenticated:
         if request.method == "POST":
             form = forms.CreateCommentForm(request.POST)
             if form.is_valid():
-                #content = request.POST.get('content')
                 username = request.user.username
                 content = form.cleaned_data['content']
-                print("-request: ",request)
-                print("-content: ",content)
-                print("id: ",post.id)
                 models.CommentModels.objects.create(post=post, username=username, content=content)
-            
     else:
         form = None
     comments = models.CommentModels.objects.filter(post=post).order_by('-id')
-    print("nombre: ",len(comments))
     context={
         'post': post,
         'comments': comments,
         'form': form,
     }
-    print("ca marche")
-    for comment in comments:
-        print(comment.content)
     return render(request, 'blog_app/comments.html', context)
 
 
-# def contact_view(request):
-#     print("ici")
-#     if request.method == 'POST':
-#         form = forms.ContactForm(request.POST)
-#         print("form: ",form)
-#         if form.is_valid():
-#             print("formulaire valide")
-
-#             send_mail("send_email")
-
-#             return redirect('contact_view')
-#     else:
-#         form = forms.ContactForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'blog_app/contact.html', context)
-
 def contact_view(request):
+    """handles the submission of a contact form
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if request.method == 'POST':
         form = forms.ContactForm(request.POST)
         if form.is_valid():
@@ -439,6 +386,7 @@ def contact_view(request):
     }
     return render(request, 'blog_app/contact.html', context)
 
+
 def about_us(request):
     return render(request, "blog_app/aboutus.html")
 
@@ -458,23 +406,28 @@ def search_resutls(request):
     if search_text:
         # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
         # | opératuer de django pour combiné les requetes
-        print("query: ",search_text)
         users = models.UserModels.objects.filter(Q(username__contains=search_text))
         posts = models.PostModels.objects.filter(Q(title__contains=search_text)).order_by('-id')
-        print("post user id: ", posts)
         context = {
             'users': users,
             'posts': posts,
             }
         if users or posts:
-            return render(request, "blog_app/posts.html", context)     
+            return render(request, "blog_app/post/posts.html", context)     
     return redirect(request.META.get('HTTP_REFERER', '/'))
     
 
 
 def search_recommandations(request):
+    """show recommendation based on the user's search
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     search_text = request.POST.get('search')
-    # results = models.PostModels.objects.filter(Q(title__contains=search_text) | Q(username__contains=search_text)).order_by('-id')
     if search_text:
         results = models.PostModels.objects.filter(title__contains=search_text)
         users = models.UserModels.objects.filter(username__contains=search_text)
@@ -485,9 +438,6 @@ def search_recommandations(request):
         'results': results,
         'users': users,
     }
-    print("users: ",users)
-    for user in users:
-        print("username: ",user)
     return render(request, 'blog_app/search_recommandations.html', context)
     
     

@@ -1,4 +1,4 @@
-/* blog/blog_app/static/blog_app/post_detail.html */
+/* blog_app/static/blog_app/post_detail.html */
 
 @import url('base.css');
 
@@ -176,12 +176,6 @@
     text-overflow: ellipsis;
 }
 
-/* .more-posts-grid .boutons{
-    position: relative;
-    top: 100px;
-    background-color: violet;
-} */
-
 /* main-content */
 
 .main-content .post-img {
@@ -197,11 +191,6 @@
     left: 20%;
     text-align: justify;
 }
-
-/* 
-.content .btn-add-comment{
-    cursor: pointer;
-} */
 
 button{
     cursor: pointer;
@@ -243,7 +232,6 @@ button{
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
-    /* font-size: 16px; */
     width: 100%;
     background-color: #f6f6f6;
     color: #333;

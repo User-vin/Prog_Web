@@ -1,4 +1,6 @@
+# blog_app/admin.py
 
+# permet de personnaliser l'interface administrateur intégrée dans django
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -11,7 +13,6 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ('Personal Info', {'fields': ('description',)}),
     )
-
 
 class CustomPostAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'categorie', 'title', 'date')

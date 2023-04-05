@@ -1,6 +1,7 @@
-# blog/blog_app/models.py
+# blog_app/models.py
 
-# permet de définir la structure de base de donnée
+# permet de définir les models de données utilisées 
+# définie la compositions des objets stokés dans la bdd
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -12,11 +13,9 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-
-
 # gestionnaire par défaut plus disponible car User remplacé par une version personnalisée (UserModels)
 class UserManager(BaseUserManager):
-    use_in_migrations = True
+    use_in_migrations = True # un flag qui dit a django d'ajouter le manager dans la bdd
 
     def create_user(self, email, description, password=None, **extra_fields):
         """
@@ -25,9 +24,10 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('L\'email est obligatoire')
         email = self.normalize_email(email)
+        # crée un nouvel utilisateur avec ces paramètres
         user = self.model(email=email, description=description, **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
+        user.save(using=self._db) # sauvegarde dans la bdd
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -58,31 +58,30 @@ class PostManager(models.Manager):
         return post
 
 
-    
 class PostModels(models.Model): # structure d'un article de blog
     
     class Categories(models.TextChoices): # permet de définir des choix textuels pour la catégorie
         Healthy_Food = 'Healthy Food' # Healthy Food ... sont les clés classées dans la BDD pour chaque catégories
         Organic_Cuisine = 'Organic Cuisine'
         Vegetarian_Food = 'Vegetarian Food'
-       
-    # username = models.CharField(max_length=30, blank=False)
+    
+    # on_delete=models.CASCADE définie ce qui se passe quand l'objet est suprimé
     user_id= models.ForeignKey(UserModels, on_delete=models.CASCADE)
     categorie = models.fields.CharField(choices=Categories.choices, max_length=15)
     date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=30, blank=False)
-    # content = models.TextField(blank=False)
-    # content = RichTextField(blank=False, null=True)
+    # blank=False, le champ ne peut pas etre vide
+    # null=True, peut etre laisser vide dans la bdd
     content = RichTextUploadingField(blank=False, null=True)
     image = models.ImageField(upload_to='posts_images/', blank=False, null=True)
+    # permet d'avoir accée depuis UserModels
     favoris = models.ManyToManyField(UserModels, blank=True, related_name='favoris')
     bookmark = models.ManyToManyField(UserModels, blank=True, related_name='bookmark')
     objects = PostManager()
     
-    
     def get_content_as_text(self):
         return strip_tags(self.content)
-    
+
 
 class CommentModels(models.Model):
     username = models.CharField(max_length=30, blank=False)

@@ -1,8 +1,10 @@
+<!-- blog_app/templates/blog_app/search_recommandations.html -->
 
 {% if results %}
 
     {% csrf_token %}
     <ul id="list">
+        <!-- slice:":10", en récuppère que 10 -->
         {% for result in results|slice:":10" %}
             <li class="result" onclick="location.href='{% url 'post_detail' pk=result.id user_id=result.user_id categorie=result.categorie %}'">
                 {{ result.title }}
@@ -18,19 +20,18 @@
 {% endif %}
 
 <style>
-
+    /* import la stylesheet base.css */
     @import url('base.css');
 
-    #list {
+    #list{
         position: absolute;
         list-style-type: none;
         margin: 0;
         padding: 0;
         margin-left: 55px;
-        
     }
 
-    .result {
+    .result{
         display: flex;
         height: 30px;
         border: 1px solid black;
@@ -43,7 +44,7 @@
         transition: var(--background-color) 0.3s ease;
     }
 
-    .result:hover {
+    .result:hover{
         background-color: var(--background-color);
     }
     

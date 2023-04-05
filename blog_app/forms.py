@@ -12,12 +12,13 @@ from . import models
 
 from django.contrib.auth.forms import UserChangeForm
 
+# permet de changer les attributs d'un objets utilisateur
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = models.UserModels
         fields = '__all__'
 
-
+# permet de modifier le contenu des attributs dans l'objet utilisateur 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.UserModels
@@ -39,7 +40,8 @@ class CreatePostForm(forms.ModelForm):
     
     class Meta:
         model = models.PostModels
-        fields = ['title', 'image', 'content', 'categorie']
+        # champs qui s'affichent automatiquement si utilisation de {{ form.as_p }}
+        fields = ['title', 'image', 'content', 'categorie']  
         labels = { # libellés remplacés par ''
             'title': '',
             'categorie': 'Catégorie',
@@ -48,7 +50,6 @@ class CreatePostForm(forms.ModelForm):
         }
         widgets = {  
             'title': forms.TextInput(attrs={'placeholder': 'Titre', 'id': 'id_write_title'}), # affiche du texte dans le champ
-            # 'content': forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'post-content'})),
             'content' : forms.CharField(widget=CKEditorUploadingWidget()),
 
         }

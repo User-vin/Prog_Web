@@ -41,31 +41,6 @@
   background-color: yellowgreen;
 }
 
-
-/*.post-page textarea {
-  height: auto;
-  resize: none;
-  min-height: 100px;
-}*/
-
-/* #cke_1_top{
-  position: sticky;
-  top: 0;
-}  */
-/* 
-.ckeditor {
-  height: auto !important;
-  min-height: 100px;
-  max-height: 500px;
-} */
-
-/* .django-ckeditor-widget, .django-ckeditor-widget, .post-page{
-  height: auto !important;
-  min-height: 100px;
-  max-height: 500px;
-  height: 1000px;
-} */
-
 .post-page input[type="submit"] {
   background-color: #729D39;
   color: #fff;

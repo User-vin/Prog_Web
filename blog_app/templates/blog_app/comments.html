@@ -1,10 +1,11 @@
-<!-- blog/blog_app/templates/blog_app/comments.html -->
+<!-- blog_app/templates/blog_app/comments.html -->
 {% if post %}
 <div class="content" id="comments-area">
     <h2>Comments</h2>
     {% if request.user.is_authenticated %}
     <div class="btn-add-comment">
         <h2>Ajouter un commentaire</h2>
+        <!-- basise formulaire pour afficher tous les champs contenus dans {{ form.as_p }} -->
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
@@ -42,12 +43,8 @@
         var contents = document.querySelector(".contents");
         var content = document.querySelector(".content");
         var mainContent = document.querySelector(".main-content");
-        console.log("mainContent: ",mainContent.clientHeight)
-        console.log("content: ",content.clientHeight)
         
         var height = mainContent.clientHeight;
-        console.log("height: ",height)
-        console.log("contents: ",contents.clientHeight)
         contents.style.height = height + "px";
 
     </script>

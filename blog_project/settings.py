@@ -175,6 +175,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'progweb43@gmail.com' 
 EMAIL_HOST_PASSWORD = 'bigoxmpwurupsjxr'
 
-
-# DEFAULT_FROM_EMAIL = 'progweb43@gmail.com'
-# SERVER_EMAIL = 'progweb43@gmail.com'

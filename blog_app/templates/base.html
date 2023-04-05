@@ -1,4 +1,4 @@
-<!-- blog/blog_app/templates/base.html -->
+<!-- blog_app/templates/base.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/47fdd051ae.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href={% static 'blog_app/base.css' %}>
+    <!-- permet a ajouter du html ici depuis un autre fichier -->
     {% block stylesheet %}
 
     {% endblock stylesheet %}
@@ -27,31 +28,35 @@
     </div>
 
     
-
+    <!-- inclu la librairie htmx -->
     <script src="https://unpkg.com/htmx.org@1.6.0"></script>
     <script>
+        // permet d'inclure {{ csrf_token }} pour les balises htmx
         document.body.addEventListener('htmx:configRequest', (e) => {
             e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
         })
 
-        document.addEventListener('click', function(event) {
-            var searchInput = document.querySelector('.search-input');
+        document.addEventListener('click', function(event) { //ajoute un click event
+            var searchInput = document.querySelector('.search-input'); // stocke l'élément .search-input
             var searchReco = document.querySelector('#search-recommandations');
             var containerSearchReco = document.querySelector('#container-search-recommandations');
+            // vérifie si le click ne se ait pas dans un des éléments suivants
             if (!searchReco.contains(event.target) && !containerSearchReco.contains(event.target) && !searchInput.contains(event.target)) {
-                searchReco.style.display = 'none';
+                searchReco.style.display = 'none'; // cache l'élément
             }
             if(searchInput.contains(event.target)){
-                searchReco.style.display = 'block';
+                searchReco.style.display = 'block'; // affiche l'élément
             }
         });
 
         const logoutButton = document.getElementById('logout-btn');
       
         logoutButton.addEventListener('click', () => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/logout/');
+            const xhr = new XMLHttpRequest(); // crée une instance de XMLHttpRequest()
+            xhr.open('POST', '/logout/'); // définit la méthode et l'URL de la requête
+            // permet d'ajouter le jeton CSRF à l'en-tête de la requête HTTP pour la protéger contre les attaques CSRF
             xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            // définie ce qu'il se passe quand le chargement est fini
             xhr.onload = () => {
             if (xhr.status === 200) {
                 location.reload();
