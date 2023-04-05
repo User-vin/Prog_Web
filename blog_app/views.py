@@ -325,7 +325,7 @@ def posts(request, filter_by, value):
     else:
         post_list = ""
         
-    p = Paginator(post_list, 2)
+    p = Paginator(post_list, 4)
     page = request.GET.get('page')
     posts = p.get_page(page)
     context = {
@@ -400,16 +400,37 @@ def comments_area(request, pk):
     return render(request, 'blog_app/comments.html', context)
 
 
+# def contact_view(request):
+#     print("ici")
+#     if request.method == 'POST':
+#         form = forms.ContactForm(request.POST)
+#         print("form: ",form)
+#         if form.is_valid():
+#             print("formulaire valide")
+
+#             send_mail("send_email")
+
+#             return redirect('contact_view')
+#     else:
+#         form = forms.ContactForm()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'blog_app/contact.html', context)
+
 def contact_view(request):
-    print("ici")
     if request.method == 'POST':
         form = forms.ContactForm(request.POST)
-
         if form.is_valid():
-            print("formulaire valide")
-
-            send_mail("send_email")
-
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            content = form.cleaned_data['content']
+            send_mail(
+                'Nouveau message de {}'.format(username),
+                content,
+                email,
+                ['progweb43@gmail.com'], # email du destinataire
+            )
             return redirect('contact_view')
     else:
         form = forms.ContactForm()

@@ -33,7 +33,7 @@ h1{
 
 /* animation de glissade */
 
-.post-img{
+.new-posts{
     animation-duration: 3s;
     animation-delay: None;
     animation-name: glissement;
@@ -42,7 +42,7 @@ h1{
 
 @keyframes glissement{
     from{
-        margin-left: 100%;
+        margin-left: 40%;
         width: 100%;
     }
 

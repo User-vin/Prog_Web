@@ -1,5 +1,6 @@
 /* blog/blog_app/static/blog_app/post_detail.html */
 
+@import url('base.css');
 
 .contents{
     width: 100%;
@@ -14,49 +15,79 @@
     background-color: transparent;
 }
 
+.box-user-profil-btn{
+    display: flex;
+    height: 4em;
+    align-items: center;
+    background-color: var(--background-color-dark);
+}
+
+.box-user-profil-btn a{
+    padding-left: 20px;
+    color: #fff;
+}
+
+.description-text, 
+.boutons, 
+.vide{
+    background-color: white;
+}
+
+.more-posts h2{
+    padding-left: 20px;
+}
+
+.more-posts h2,
+.more-posts a{
+    color: #fff;
+}
+
+.more-posts, .more-posts-grid{
+    background-color: var(--background-color-dark);
+}
 
 /* banner */
 
-.banner {
-    background-color: #394a41;
+.banner{
+    background-color: var(--background-color-dark);
     color: #fff;
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 30px;
-  }
-  
-  h1 {
+}
+
+.banner h1{
     margin: 0;
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 10px;
-  }
-  
-  .post-info {
+}
+
+.banner .post-info{
     font-size: 18px;
     display: flex;
     align-items: center;
-  }
-  
-  .post-info span {
+}
+
+.banner .post-info span{
     margin-right: 20px;
-  }
-  
-  .user {
+}
+
+.banner .user{
     font-weight: bold;
     text-transform: uppercase;
-  }
-  
-  .date,
-  .category {
+}
+
+.banner .date,
+.banner .category{
     color: #c3d3c0;
-  }
-  
-  .category {
+}
+
+.banner.category{
     font-weight: bold;
     text-transform: uppercase;
     margin-left: auto;
-  }
+}
   
 
 /* more */

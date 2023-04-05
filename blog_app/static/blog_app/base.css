@@ -6,6 +6,7 @@
 
 :root{
     --background-color: #729D39;
+    --background-color-dark: #394a41;
     --transition-btn: .4s;
 }
 
@@ -32,10 +33,25 @@ body{
     cursor: pointer;
 }
 
-
 a{
     color: black;
     text-decoration: none;
+}
+
+/* zoom quand souris passe sur l'image */
+
+.blog-grid, .post{
+    overflow: hidden;
+}
+
+.img-zoom{
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+  
+.img-zoom:hover{
+    transform: scale(1.3);
 }
 
 /* top page */
@@ -127,7 +143,7 @@ nav .centered{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: var(--background-color-dark);
     overflow-x: hidden;
     transition: 0.5s;
 }
@@ -148,8 +164,10 @@ nav .centered{
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
+    color: #fff;
 }
 
+/* nav */
 
 nav.nav .button-log-regis{
     margin-right: 15%;
@@ -261,11 +279,18 @@ nav.nav button{
 
 footer{
     display: flex;
-    width: 70%;
+    width: 100%;
     margin: auto;
     margin-top: 100px;
+    bottom: 0;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    background-color: var(--background-color-dark);
+    color: #fff;
+}
+
+footer a{
+    color: #fff;
 }
 
 

@@ -149,24 +149,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'min-width': 300,
-#         'autoGrow_onStartup': True,
-#         'autoGrow_minHeight': 100,
-#         'autoGrow_maxHeight': 650,
-#         'extraPlugins': 'autogrow',
-#             'toolbar': 'Custom',
-#             'toolbar_Custom': [
-#             ['Bold', 'Italic', 'Underline'],
-#             ['Format'],
-#             #['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-#             ['Link', 'Unlink'],
-#             ['RemoveFormat', 'Source']
-#         ],
-#     }
-# }
-
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
@@ -184,3 +166,15 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'progweb43@gmail.com' 
+EMAIL_HOST_PASSWORD = 'bigoxmpwurupsjxr'
+
+
+# DEFAULT_FROM_EMAIL = 'progweb43@gmail.com'
+# SERVER_EMAIL = 'progweb43@gmail.com'

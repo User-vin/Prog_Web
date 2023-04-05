@@ -42,18 +42,16 @@
         </div>
 
         <div class="more">
-            <br>
-            <a class="transition-btn" href="{% url 'account' user_id=post.user_id.id %}">see {{ post.user_id.username }}'s Profil</a>
-            <br>
-            <br>
-            <br>
+            <div class="box-user-profil-btn">
+                <h2><a href="{% url 'account' user_id=post.user_id.id %}">see {{ post.user_id.username }}'s profil</a></h2>
+            </div>
             <div class="more-posts">
-                more from {{ post.user_id.username }}
+                <h2>more from {{ post.user_id.username }}</h2> 
                 <hr>
                 <div class="more-posts-grid">
                     {% for post in by_username|slice:":2" %}
                         <div class="post">
-                            <div class="post-img" 
+                            <div class="post-img img-zoom" 
                                 style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
                                 onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                             </div>
@@ -80,13 +78,13 @@
             </div>
 
             <div class="more-posts">
-                more from {{ post.categorie }}
+                <h2>{{ post.categorie }}</h2> 
                 <hr>
                 <div class="more-posts-grid">
                     {% for post in by_categorie|slice:":2" %}
                         
                             <div class="post">
-                                <div class="post-img" 
+                                <div class="post-img img-zoom" 
                                     style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
                                     onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                                 </div>

@@ -49,7 +49,7 @@
     <section class="blog">
         <div class="blog-grid">
             {% if first_post %}
-                <div class="food1" style="background-image: url('{{ MEDIA_URL }}{{ first_post.image.url }}');">
+                <div class="food1  img-zoom" style="background-image: url('{{ MEDIA_URL }}{{ first_post.image.url }}');">
                 </div>
                 <div class="description1">
                     <a href="{% url 'posts_filter' filter_by='categorie' value=first_post.categorie %}" class="post-categorie colored-text">
@@ -78,7 +78,7 @@
                 </div>
             {% endif %}
             {% if second_post %}
-                <div class="food2" style="background-image: url('{{ MEDIA_URL }}{{ second_post.image.url }}');">
+                <div class="food2 img-zoom" style="background-image: url('{{ MEDIA_URL }}{{ second_post.image.url }}');">
                 </div>
                 <div class="description2">
                     <a href="{% url 'posts_filter' filter_by='categorie' value=second_post.categorie %}" class="post-categorie colored-text">
@@ -117,7 +117,7 @@
                 {% for post in posts|slice:":3" %}
                     <div class="post">
                         
-                        <div class="post-img" 
+                        <div class="post-img img-zoom" 
                             style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
                             onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                         </div>
@@ -161,7 +161,7 @@
                 {% for post in posts2|slice:":3" %}
                     <div class="post" >
                         
-                        <div class="post-img" 
+                        <div class="post-img img-zoom" 
                             style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
                             onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                         

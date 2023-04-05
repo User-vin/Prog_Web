@@ -51,7 +51,7 @@
             {% for post in posts %}
                 <div class="post" >
                     
-                    <div class="post-img" 
+                    <div class="post-img img-zoom" 
                         style="background-image: url('{{ MEDIA_URL }}{{ post.image.url }}');"
                         onclick="location.href='{% url 'post_detail' pk=post.id user_id=post.user_id categorie=post.categorie %}'">
                     </div>
