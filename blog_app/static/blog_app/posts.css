@@ -30,6 +30,28 @@ h1{
 
 /* section.display-posts */
 
+
+/* animation de glissade */
+
+.post-img{
+    animation-duration: 3s;
+    animation-delay: None;
+    animation-name: glissement;
+    animation-iteration-count: 1;
+}
+
+@keyframes glissement{
+    from{
+        margin-left: 100%;
+        width: 100%;
+    }
+
+    to{
+        margin-left: 0%;
+        width: 100%;
+    }
+}
+
     /* posts */
 section.display-posts{
     position: relative;
@@ -45,7 +67,8 @@ section.display-posts{
     grid-auto-rows: 220px;
     grid-column-gap: 2em;
     grid-row-gap: 2em;
-    box-shadow: 2px 2px 5px #888888;
+    margin-bottom: 2em;
+    /* box-shadow: 2px 2px 5px #888888; */
 }
 
 

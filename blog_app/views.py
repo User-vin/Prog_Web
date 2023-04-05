@@ -138,20 +138,6 @@ def account_view(request, user_id):
     }
     return render(request, "blog_app/sidebar/account.html", context)
 
-# @login_required
-# def account_view(request):
-#     user = request.user
-#     posts_count = models.PostModels.objects.filter(user_id=user.id).count
-#     bookmarked_count = models.PostModels.objects.filter(bookmark=user).count
-#     fav_count = models.PostModels.objects.filter(favoris=user).count
-#     context = {
-#         'user': user,
-#         'posts_count': posts_count,
-#         'bookmarked_count': bookmarked_count,
-#         'fav_count': fav_count,
-#     }
-#     return render(request, "blog_app/sidebar/account.html", context)
-
 
 @login_required
 def parameters_view(request):
@@ -206,22 +192,6 @@ def post_view(request):
     return render(request, "blog_app/post.html", {'form': form})
 
 
-def list_posts(request):
-    """Allows the display of all the messages sorted by in descending order according to the id. 
-
-    Args:
-        request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
-
-    Returns:
-        _type_: HTTP response object that renders an HTML page template with all the posts.
-    """
-    p = Paginator(models.PostModels.objects.all().order_by('-id'), 5    )
-    # Récupére le numéro de page à partir des paramètres GET
-    page = request.GET.get('page')
-    # Récupére les objets Post de la page courante
-    posts = p.get_page(page)
-    return render(request, "blog_app/posts.html", {'posts': posts})
-
 def add_remove_favori(request, id):
     print("id: ",id)
     if request.user.is_authenticated:    
@@ -233,7 +203,7 @@ def add_remove_favori(request, id):
                 post.favoris.add(request.user)
             return render( request, 'blog_app/favori_btn.html', {'post':post})
 
-# @login_required
+
 def add_remove_bookmark(request, id):
     print("id: ",id)
     if request.user.is_authenticated:   
@@ -355,30 +325,28 @@ def posts(request, filter_by, value):
     else:
         post_list = ""
         
-    p = Paginator(post_list, 3)
+    p = Paginator(post_list, 2)
     page = request.GET.get('page')
-    # if first == "True":
-    #     # page_number = 1
-        
-        
-    # else:
-    #     page += 1
-    
     posts = p.get_page(page)
-    context = {'posts': posts, 'filter_by': filter_by, 'value': value}
-    context['page'] = page
-    context['page_number'] = page_number
+    context = {
+        'posts': posts, 
+        'filter_by': filter_by, 
+        'value': value,
+        'page_max': p.num_pages + 1,
+        'page_number': page_number,
+        }
+    
     if not posts:
         context['message'] = "Empty for now, come back later"
     else:
         context['message'] = None
-    
     if filter_by == 'username':
         context['username'] = value
     elif filter_by == 'date':
         context['date'] = value
     elif filter_by == 'categorie':
         context['categorie'] = value
+    print("page shown: ",page)
     print("------------------------------------------------------")
     print("value: ",value)
     print("type: ",type(value))
