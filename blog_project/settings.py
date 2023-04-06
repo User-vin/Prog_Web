@@ -160,7 +160,7 @@ CKEDITOR_CONFIGS = {
             ['RemoveFormat', 'Source'],'/',
             ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
         ],
-        # 'width': '60%',
+        'width': '40%',
         'autoGrow_minHeight': 300,
         'extraPlugins': ','.join(['autogrow','uploadimage']),
     }

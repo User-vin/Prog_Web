@@ -17,6 +17,40 @@
   width: fit-content;
 }
 
+/* post-page */
+
+.post-page .django-ckeditor-widget{
+  width: 100%;
+}
+
+.post-page, .post-page #post-page-btn, .post-page .cke_reset{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.post-page .cke_reset #cke_1_top{
+  position: absolute;
+  margin-left: 46%;
+  background-color: transparent;
+  border: none;
+}
+
+.post-page .cke_reset #cke_1_top #cke_1_toolbox{
+  position: fixed;
+  width: 100px;
+  padding: 20px;
+  border-left: 1px solid black;
+}
+
+.post-page .cke_reset .cke_contents{
+  min-height: 400px;
+}
+
+.post-page .cke_reset #cke_1_bottom{
+  visibility: hidden;
+  display: none;
+}
+
 .post-page{
   padding: 3%;
 }

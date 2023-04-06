@@ -34,7 +34,6 @@ urlpatterns = [
     path('about-us/', views.about_us, name="about_us"),
     
     # search
-    path('search-results/', views.search_resutls, name="search-results"),
     path('search-recommendations/', views.search_recommandations, name="search-recommandations"),
 
     # sidebar pages

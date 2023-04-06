@@ -11,7 +11,7 @@
             </li>
         {% endfor %}
         {% for user in users|slice:":10" %}
-            <li class="result">
+            <li class="result" onclick="location.href='{% url 'account' user_id=user.id %}'">
                 {{ user.username }}
             </li>
         {% endfor %}
@@ -34,6 +34,7 @@
     .result{
         display: flex;
         height: 30px;
+        width: 100px;
         border: 1px solid black;
         background-color: white;
         cursor: pointer;

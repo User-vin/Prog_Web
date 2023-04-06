@@ -18,7 +18,7 @@
         </div>
     </div>
     <!-- spécifiant l'URL de la vue des résultats de recherche à laquelle les données du formulaire seront soumises -->
-    <form action="{% url 'search-results' %}" 
+    <form action="{% url 'posts_filter' filter_by='other' value='other' %}"  
         method="GET" 
         class="search" >
         <!-- template tag pour des raisons de sécuritées -->
@@ -53,16 +53,18 @@
         <!-- si lu'utilisateur est connecté -->
         {% if user.is_authenticated %}
             <div class="button-log-regis">
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <!-- type="submit": spécifier que le bouton est un bouton de soumission -->
-                <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
-            </form>       
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <!-- type="submit": spécifier que le bouton est un bouton de soumission -->
+                    <button class="transition-btn" id="logout-btn" type="submit">Logout</button>
+                </form>   
+            </div>    
         {% else %}
-            <!-- ?next={{request.path}}, valeur donnée à la variable next récuppèrable dans la vue -->
-            <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
-                Login/Register
-            </button>
+            <div class="button-log-regis">
+                <!-- ?next={{request.path}}, valeur donnée à la variable next récuppèrable dans la vue -->
+                <button class="transition-btn" onclick="location.href='{% url "login" %}?next={{request.path}}'">
+                    Login/Register
+                </button>
             </div>
         {% endif %}
     </div>

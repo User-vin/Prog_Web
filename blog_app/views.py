@@ -281,6 +281,14 @@ def posts(request, filter_by, value):
         page_number+=1
     if filter_by == 'username':
         post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
+    elif filter_by == 'other':
+        print("----------------OTHER----------------")
+        print(request.GET)
+        search_text = request.GET.get('search')
+        print("search_text: ",search_text)
+        post_list = models.PostModels.objects.filter(Q(title__icontains=search_text)).order_by('-id')
+        user_name = models.UserModels.objects.filter(Q(username__icontains=search_text)).order_by('-id')
+        print("user_name: ",user_name)
     elif filter_by == 'all':
         post_list = models.PostModels.objects.all().order_by('-id')
     elif filter_by == 'date':
