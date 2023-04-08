@@ -179,6 +179,7 @@ def parameters_view(request):
     }
     return render(request, "blog_app/sidebar/parameters.html", context)
 
+@login_required
 def post_view(request):
     """This method is used to manage post creation.
 
@@ -238,7 +239,7 @@ def post_detail(request, pk, user_id, categorie):
         _type_: HTTP response object that renders an HTML page template with the PostModels object.
     """
     post = get_object_or_404(models.PostModels, pk=pk)
-    by_username = models.PostModels.objects.filter(user_id=request.user.id).exclude(id__in=[post.id]).order_by('-id')[:2]
+    by_username = models.PostModels.objects.filter(user_id=post.user_id.id).exclude(id__in=[post.id]).order_by('-id')[:2]
     by_categorie = models.PostModels.objects.filter(categorie=categorie).exclude(id__in=[post.id]+[post2.id for post2 in by_username]).order_by('-id')[:2]
     comments = models.CommentModels.objects.filter(post=post).order_by('-id')
     if request.user.is_authenticated:
