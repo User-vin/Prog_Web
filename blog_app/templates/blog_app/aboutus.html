@@ -7,32 +7,39 @@
 <head>
     {% block stylesheet %}
     <link rel="stylesheet" type="text/css" href={% static 'blog_app/about_us.css' %}>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap">
     {% endblock stylesheet %}
 </head>
+
 <body>
     {% block index %}
     {% include 'top_page.html' %}
     {% include 'nav.html' %}
-    <div id="first-div">
-        <h2>Un Hobby et une passion...</h2>
-        <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi consequatur eum expedita nemo reiciendis asperiores iusto tempora nostrum quas accusamus laudantium similique repellendus delectus aliquam earum, ipsam quae eos voluptatum.
-            <img src="../../static/images/media/posts_images/burger-dessin_748pMjQ.jpg" width="128" height="128">
-        </p>
-    </div>
-    <div id="second-div">
-        <h2>...qui est devenu un Travail!</h2>
-        <p>
+
+    <section id="hero">
+        <h1 class="hero-title">Un Hobby et une passion...</h1>
+        <div class="hero-img">
+            <img src="../../static/images/media/posts_images/burger-dessin.jpg" width="128" height="128">
+        </div>
+    </section>
+
+    <section id="content">
+        <div class="content-text">
+            <h2>...qui est devenu un Travail!</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium in culpa distinctio ea asperiores id consequuntur minus, consectetur non, quasi modi voluptatem ratione nisi cupiditate autem aliquid rerum dolorum similique.
+            </p>
+        </div>
+        <div class="content-img">
             <img src="../../static/images/media/posts_images/platter.jpg" width="128" height="128">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium in culpa distinctio ea asperiores id consequuntur minus, consectetur non, quasi modi voluptatem ratione nisi cupiditate autem aliquid rerum dolorum similique.
-        </p>
-    </div>
-    <div id="to-contact">
-        <h2>Pour plus d'informations</h2>
-        <a onclick="location.href='{% url "contact_view" %}'" id="redirect-contact">
-            Contactez-nous
-        </a>
-    </div>
+        </div>
+    </section>
+
+    <section id="cta">
+        <h2 class="cta-title">Pour plus d'informations</h2>
+        <button onclick="location.href='{% url 'contact_view' %}'" id="cta-btn">Contactez-nous</button>
+    </section>
+
     {% include 'footer.html' %}
     {% endblock index %}
 </body>

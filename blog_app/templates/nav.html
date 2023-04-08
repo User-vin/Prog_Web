@@ -3,7 +3,7 @@
 
 <nav class="nav">
     <!-- onclick =, ce qui se passe si click sur l'élément -->
-    <div class="menu" onclick="openSide()">
+    <div class="menu">
         <div id="sidebar">
             <ul>
                 <li><a class="transition-btn" href="{% url 'account' user_id=request.user.id %}">Account</a></li>
@@ -12,7 +12,7 @@
                 <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='favorite' value=request.user %}">Favorites</a></li>
             </ul>
         </div>
-        <button><i class="fa-solid fa-bars"></i></button>
+        <button  onclick="openSide()"><i class="fa-solid fa-bars"></i></button>
         <div id="container-search-recommandations">
             <div id="search-recommandations"></div>
         </div>
@@ -20,7 +20,7 @@
     <!-- spécifiant l'URL de la vue des résultats de recherche à laquelle les données du formulaire seront soumises -->
     <form action="{% url 'posts_filter' filter_by='other' value='other' %}"  
         method="GET" 
-        class="search" >
+        class="search">
         <!-- template tag pour des raisons de sécuritées -->
         {% csrf_token %}    
         <!-- 

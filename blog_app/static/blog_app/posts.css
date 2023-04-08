@@ -28,27 +28,79 @@ h1{
 }
 
 
+/* banner */
+
+.banner{
+    display: flex;
+    background-color: var(--background-color-dark);
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.banner  .sort-by{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.banner .sort-value{
+    padding-left: 15%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 /* section.display-posts */
 
 
 /* animation de glissade */
 
 .new-posts{
-    animation-duration: 3s;
-    animation-delay: None;
-    animation-name: glissement;
-    animation-iteration-count: 1;
+    position: relative;
+    overflow: hidden;
+    animation: curtain-reveal 1s ease-out;
 }
-
+  
+@keyframes curtain-reveal{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+  
+  
 @keyframes glissement{
     from{
+        opacity: 0;
         margin-left: 40%;
         width: 100%;
     }
-
     to{
+        opacity: 1;
         margin-left: 0%;
         width: 100%;
+    }
+}
+
+/* @keyframes apparition {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  } */
+
+@keyframes apparition {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
 }
 
@@ -134,7 +186,6 @@ section.display-posts{
     font-weight: 800;
     color: var(--background-color);
 }
-
 
 
 

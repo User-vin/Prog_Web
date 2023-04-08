@@ -277,18 +277,15 @@ def posts(request, filter_by, value):
     """
     first = request.GET.get('first', "True") # récuppère la valeur de first sinon donne la valeur True
     page_number = int(request.GET.get('current_page',2))
+    search_text = None
     if first == "False":
         page_number+=1
     if filter_by == 'username':
         post_list = models.PostModels.objects.filter(user_id=value).order_by('-id')
-    elif filter_by == 'other':
-        print("----------------OTHER----------------")
-        print(request.GET)
+    elif filter_by == 'other':  
         search_text = request.GET.get('search')
-        print("search_text: ",search_text)
         post_list = models.PostModels.objects.filter(Q(title__icontains=search_text)).order_by('-id')
-        user_name = models.UserModels.objects.filter(Q(username__icontains=search_text)).order_by('-id')
-        print("user_name: ",user_name)
+        # user_name = models.UserModels.objects.filter(Q(username__icontains=search_text)).order_by('-id')
     elif filter_by == 'all':
         post_list = models.PostModels.objects.all().order_by('-id')
     elif filter_by == 'date':
@@ -323,6 +320,9 @@ def posts(request, filter_by, value):
         'page_max': p.num_pages + 1,
         'page_number': page_number,
         }
+    
+    if search_text != None:
+        context['search_text'] = search_text
     
     if not posts:
         context['message'] = "Empty for now, come back later"
@@ -396,34 +396,7 @@ def contact_view(request):
 
 
 def about_us(request):
-    return render(request, "blog_app/aboutus.html")
-
-
-def search_resutls(request):
-    """This method allows you to search for objects in a database using specific search criteria.
-        search by title and username
-
-    Args:
-        request (_type_): Contains information about the HTTP request that was sent by the client and allows to interact with the data sent in the request.
-
-    Returns:
-        _type_: html with all objects 
-    """
-    # récupère la requete applée 'title/username'
-    search_text = request.GET.get('search')
-    if search_text:
-        # récupère les objets filtrés par le titre et le nom d'utilisateur en fonction de query
-        # | opératuer de django pour combiné les requetes
-        users = models.UserModels.objects.filter(Q(username__contains=search_text))
-        posts = models.PostModels.objects.filter(Q(title__contains=search_text)).order_by('-id')
-        context = {
-            'users': users,
-            'posts': posts,
-            }
-        if users or posts:
-            return render(request, "blog_app/post/posts.html", context)     
-    return redirect(request.META.get('HTTP_REFERER', '/'))
-    
+    return render(request, "blog_app/aboutus.html")    
 
 
 def search_recommandations(request):
@@ -435,10 +408,15 @@ def search_recommandations(request):
     Returns:
         _type_: _description_
     """
+    print("-----dedans-----")
     search_text = request.POST.get('search')
+    print(search_text)
     if search_text:
+        print("--if--")
         results = models.PostModels.objects.filter(title__contains=search_text)
         users = models.UserModels.objects.filter(username__contains=search_text)
+        print(results)
+        print(users)
     else:
         results = ""
         users = ""
@@ -446,6 +424,7 @@ def search_recommandations(request):
         'results': results,
         'users': users,
     }
+    print("-----dehors-----")
     return render(request, 'blog_app/search_recommandations.html', context)
     
     

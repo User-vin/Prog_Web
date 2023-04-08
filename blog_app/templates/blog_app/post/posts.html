@@ -17,35 +17,50 @@
     {% if page_number <= 2 %}
         {% include 'top_page.html' %}
         {% include 'nav.html' %}
-        {% if request.resolver_match.url_name == 'list_posts' %}
-            <h1>Tous les articles</h1>
-        {% elif request.resolver_match.url_name == 'posts_filter' %}
-            {% if filter_by == 'username' %}
-                <h1>Articles de {{ username }}</h1>
-            {% elif filter_by == 'date' %}
-                <h1>Articles du {{ date }}</h1>
-            {% elif filter_by == 'categorie' %}
-                <h1>Articles de la catégorie {{ categorie }}</h1>
-            {% elif filter_by == 'bookmark' %}
-                <h1>Articles bookmarked</h1>
-                {% if message %}
-                    {{ message }}
-                {% endif %}
-            {% endif %}
-        {% else %}
-            <h1>Blog</h1>
-        {% endif %}
+        
     
     <!-- posts -->
     
+    
+
     <section class="display-posts">
+        <div class="banner">
+
+            {% if filter_by == 'other' %}
+                <span class="sort-by">Result for :</span>
+                <span class="sort-value">{{ search_text }}</span>
+            {% else %}
+                <span class="sort-by">Filter by :</span>
+                {% if filter_by == 'all' %}
+                <span class="sort-value">All posts</span>
+                {% elif filter_by == 'username' %}
+                <span class="sort-value">Pots of {{ username }}</span>
+                {% elif filter_by == 'date' %}
+                <span class="sort-value">Date, {{ date }}</span>
+                {% elif filter_by == 'categorie' %}
+                <span class="sort-value">Category, {{ categorie }}</span>
+                {% elif filter_by == 'myPosts' %}
+                <span class="sort-value">My Posts</span>
+                {% elif filter_by == 'favorite' %}
+                <span class="sort-value">Posts Favorited</span>
+                {% elif filter_by == 'bookmark' %}
+                <span class="sort-value">Posts Bookmarked</span>
+                    {% if message %}
+                        <div class="banner">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            
+        </div>
     {% endif %}
     {% if page_number <= page_max %}
 
         <div class="posts new-posts"
-        hx-get="/posts/{{ filter_by }}/{{ value }}/?page={{ page_number }}&first=False&current_page={{ page_number }}"
-        hx-trigger="revealed"
-        hx-swap="afterend">
+            hx-get="/posts/{{ filter_by }}/{{ value }}/?page={{ page_number }}&first=False&current_page={{ page_number }}"
+            hx-trigger="revealed"
+            hx-swap="afterend">
             {% for post in posts %}
                 <div class="post" >
                     
@@ -84,8 +99,11 @@
                 </div>  
             {% endfor %}
         </div>
-    {% endif %}  
+    {% endif %}
+    
+    
     {% if page_number <= 2 %}
+        
     </section>
 
         <!-- Inf -->
@@ -118,10 +136,20 @@
             <a href="?page={{ posts.next_page_number }}">Next</a>
             <a href="?page={{ posts.paginator.num_pages }}">Last &raquo</a>
         {% endif %} -->
-
-    {% include 'footer.html' %}
+        {% if page_max == 2 and posts|length != 4 %}
+            <style>
+                footer{
+                    position: absolute;
+                    bottom: 0;
+                }
+            </style>
+            {% include 'footer.html' %}
+        {% else %}
+            {% include 'footer.html' %}
+        {% endif %}
     {% endif %}
     {% endblock index %}
+
 
 </body>
 
