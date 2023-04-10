@@ -85,7 +85,7 @@
     margin-bottom: 40px;
 }
 
-button{
+#cta button{
     display: inline-block;
     background-color: white;
     color: #333;
@@ -94,6 +94,7 @@ button{
     font-weight: bold;
     border-radius: 5px;
     text-decoration: none;
+    cursor: pointer;
     transition: red 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 

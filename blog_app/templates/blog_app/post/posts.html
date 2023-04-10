@@ -42,9 +42,9 @@
                 {% elif filter_by == 'myPosts' %}
                 <span class="sort-value">My Posts</span>
                 {% elif filter_by == 'favorite' %}
-                <span class="sort-value">Posts Favorited</span>
+                <span class="sort-value">Posts Favorited by {{ username }} </span>
                 {% elif filter_by == 'bookmark' %}
-                <span class="sort-value">Posts Bookmarked</span>
+                <span class="sort-value">Posts Bookmarked by {{ username }}</span>
                     {% if message %}
                         <div class="banner">
                             {{ message }}

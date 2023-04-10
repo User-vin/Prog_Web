@@ -4,7 +4,7 @@
     <h2>Comments</h2>
     {% if request.user.is_authenticated %}
     <div class="btn-add-comment">
-        <h2>Ajouter un commentaire</h2>
+        <h2>Add a comment</h2>
         <!-- basise formulaire pour afficher tous les champs contenus dans {{ form.as_p }} -->
         <form method="POST">
             {% csrf_token %}
@@ -13,7 +13,7 @@
                 hx-post="{% url 'comments_area' pk=post.pk %}"
                 hx-target="#comments-area"
                 hx-swap="#comments-area">
-                Poster
+                Post
             </button>
         </form>
     </div>

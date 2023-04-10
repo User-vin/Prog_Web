@@ -8,8 +8,8 @@
             <ul>
                 <li><a class="transition-btn" href="{% url 'account' user_id=request.user.id %}">Account</a></li>
                 <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='myPosts' value=request.user.id %}">MyPosts</a></li>
-                <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='bookmark' value=request.user %}">Bookmarks</a></li>
-                <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='favorite' value=request.user %}">Favorites</a></li>
+                <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='bookmark' value=request.user.id %}">Bookmarks</a></li>
+                <li><a class="transition-btn" href="{% url 'posts_filter' filter_by='favorite' value=request.user.id %}">Favorites</a></li>
             </ul>
         </div>
         <button  onclick="openSide()"><i class="fa-solid fa-bars"></i></button>

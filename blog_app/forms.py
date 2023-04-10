@@ -44,12 +44,12 @@ class CreatePostForm(forms.ModelForm):
         fields = ['title', 'image', 'content', 'categorie']  
         labels = { # libellés remplacés par ''
             'title': '',
-            'categorie': 'Catégorie',
-            'content': 'Contenu',
+            'categorie': 'Category',
+            'content': 'Content',
             'image': 'Image',
         }
         widgets = {  
-            'title': forms.TextInput(attrs={'placeholder': 'Titre', 'id': 'id_write_title'}), # affiche du texte dans le champ
+            'title': forms.TextInput(attrs={'placeholder': 'Title', 'id': 'id_write_title'}), # affiche du texte dans le champ
             'content' : forms.CharField(widget=CKEditorUploadingWidget()),
 
         }
@@ -63,7 +63,7 @@ class CreateCommentForm(forms.ModelForm):
             'content': ''
         }
         widgets = {
-            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Entrez votre commentaire ici', 'id': 'id_content'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here', 'id': 'id_content'}),
         }
 
 class ContactForm(forms.Form):

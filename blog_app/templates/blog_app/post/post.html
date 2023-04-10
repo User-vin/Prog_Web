@@ -13,12 +13,12 @@
     {% block index %}
     {% include 'nav.html' %}
         <div class="post-page">
-            <h2>Créez votre post</h2>
+            <h2>Create your own post</h2>
             <form enctype="multipart/form-data" action="" method="post">
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form.as_p }}
-                <input type="submit" value="Créer le post" id="post-page-btn">
+                <input type="submit" value="Publish post" id="post-page-btn">
             </form>
         </div>
     {% endblock index %}

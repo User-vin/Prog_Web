@@ -295,12 +295,14 @@ def posts(request, filter_by, value):
         post_list = models.PostModels.objects.filter(categorie=value).order_by('-id')
     elif filter_by == 'bookmark':
         if request.user.is_authenticated:
-            post_list = models.PostModels.objects.filter(bookmark=request.user).order_by('-id')
+            user = get_object_or_404(models.UserModels, id=value)
+            post_list = models.PostModels.objects.filter(bookmark=user).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
     elif filter_by == 'favorite':
         if request.user.is_authenticated:
-            post_list = models.PostModels.objects.filter(favoris=request.user).order_by('-id')
+            user = get_object_or_404(models.UserModels, id=value)
+            post_list = models.PostModels.objects.filter(favoris=user).order_by('-id')
         else:
             return redirect(reverse('login') + '?next=' + request.get_full_path())
     elif filter_by == 'myPosts':
@@ -329,8 +331,8 @@ def posts(request, filter_by, value):
         context['message'] = "Empty for now, come back later"
     else:
         context['message'] = None
-    if filter_by == 'username':
-        context['username'] = value
+    if filter_by == 'username' or filter_by == 'bookmark' or filter_by == 'favorite':
+        context['username'] = get_object_or_404(models.UserModels, pk=value)
     elif filter_by == 'date':
         context['date'] = value
     elif filter_by == 'categorie':
